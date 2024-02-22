@@ -3,7 +3,8 @@
 
 <head>
     @if (config('app.env') === 'production')
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-WHXFQKFYN8"></script>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS77MN8B4K"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
 
@@ -12,7 +13,7 @@
             }
             gtag('js', new Date());
 
-            gtag('config', 'G-WHXFQKFYN8');
+            gtag('config', 'G-BS77MN8B4K');
         </script>
     @endif
     <meta charset="UTF-8">
