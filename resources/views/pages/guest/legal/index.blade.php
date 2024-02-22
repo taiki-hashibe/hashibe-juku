@@ -44,10 +44,6 @@
                         <td><strong>決済期間</strong></td>
                         <td>毎月自動更新</td>
                     </tr>
-                    <tr>
-                        <td><strong>販売価格</strong></td>
-                        <td>¥1,250-</td>
-                    </tr>
                 </tbody>
             </table>
         </figure>

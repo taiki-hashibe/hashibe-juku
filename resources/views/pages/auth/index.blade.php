@@ -6,7 +6,7 @@
             </div>
             <p class="mb-8 text-center">
                 ユーザー認証が必要なページです！<br>
-                下のボタンをクリックして認証を完了してページを閲覧しよう！
+                下のボタンをタップして認証を完了してページを閲覧しよう！
             </p>
             <a class="block w-full px-6 py-2 text-white outline-1 font-bold bg-line duration-200 hover:bg-line-active"
                 href="{{ route('line_login') }}">
