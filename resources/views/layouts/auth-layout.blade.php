@@ -18,10 +18,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/versions/2.22.3/sdk.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
     @vite('resources/ts/app.ts')
-    <title>{{ config('app.name') }}</title>
+    {!! SEO::generate() !!}
     @livewireStyles
 </head>
 

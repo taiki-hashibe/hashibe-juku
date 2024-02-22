@@ -124,6 +124,7 @@ class StepMessageController extends Controller
             'date_3' => $date_3,
             'request' => request()->request_value
         ]);
+
         return view('pages.line.step.trial-lesson-submit', [
             'user' => $user
         ]);
