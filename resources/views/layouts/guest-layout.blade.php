@@ -2,25 +2,25 @@
 <html lang="ja">
 
 <head>
-    @if (isset($noindexx))
+    @if (isset($noindex))
         <meta name="robots" content="noindex">
+    @endif
+
+    @if (config('app.env') === 'production')
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS77MN8B4K"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+
+            gtag('config', 'G-BS77MN8B4K');
+        </script>
     @else
-        @if (config('app.env') === 'production')
-            <!-- Google tag (gtag.js) -->
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-BS77MN8B4K"></script>
-            <script>
-                window.dataLayer = window.dataLayer || [];
-
-                function gtag() {
-                    dataLayer.push(arguments);
-                }
-                gtag('js', new Date());
-
-                gtag('config', 'G-BS77MN8B4K');
-            </script>
-        @else
-            <meta name="robots" content="noindex">
-        @endif
+        <meta name="robots" content="noindex">
     @endif
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

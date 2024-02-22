@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white">
+<x-guest-layout class="bg-white" :noindex="true">
     <div class="w-full flex justify-center">
         <div class="flex flex-col items-center">
             <div class="block aspect-square overflow-hidden rounded-full w-32 mb-8 border">

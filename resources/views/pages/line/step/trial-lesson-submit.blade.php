@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white" :unlink="true">
+<x-guest-layout class="bg-white" :unlink="true" :noindex="true">
     <div class="mb-8">
         <div class="mb-24">
             <h2 class="text-xl font-black text-center mb-8">お申込みが完了しました！</h2>
