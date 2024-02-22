@@ -3,7 +3,7 @@
         <div class="mb-24">
             <h2 class="text-3xl md:text-5xl font-black text-center mb-8">自己紹介</h2>
             <video controls class="mb-8">
-                <source src="{{ asset('video/video-egwahiou.mp4') }}" type="video/mp4">
+                <source src="{{ config('line.video.1') }}" type="video/mp4">
             </video>
             <p class="text-center leading-8">
                 {{ $user->name }}さん<br>

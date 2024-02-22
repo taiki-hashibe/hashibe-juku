@@ -3,7 +3,7 @@
         <div class="mb-24">
             <h2 class="text-3xl md:text-5xl font-black text-center mb-8">ぼくが練習する時に一番大切にしていること</h2>
             <video controls class="mb-8">
-                <source src="{{ asset('video/video-kfewojwfe.mp4') }}" type="video/mp4">
+                <source src="{{ config('line.video.2') }}" type="video/mp4">
             </video>
             <p class="text-center leading-8">
                 今回は僕が練習する時に一番大切にしていることについてお話しします！<br>

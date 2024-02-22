@@ -111,7 +111,7 @@ trait LineSignup
             Auth::guard($this->guard)->login($user, true);
         }
 
-        return redirect()->route($this->redirectRouteName);
+        return redirect()->intended(route($this->redirectRouteName));
     }
 
     public function createAccount(mixed $profile): mixed

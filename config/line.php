@@ -15,5 +15,9 @@ return [
     'liff' => [
         'step_id' => env('LINE_LIFF_STEP_ID')
     ],
-    'my_id' => env('LINE_MY_ID')
+    'my_id' => env('LINE_MY_ID'),
+    'video' => [
+        '1' => env('LINE_VIDEO_PATH_1'),
+        '2' => env('LINE_VIDEO_PATH_2')
+    ]
 ];
