@@ -1,0 +1,21 @@
+.content {
+    p, table {
+        @apply mb-4;
+    }
+
+    h2 {
+        @apply text-lg text-slate-700 font-bold mt-6 mb-2;
+    }
+
+    ol {
+        @apply list-decimal ps-6 mb-4;
+    }
+
+    td {
+        @apply px-2 py-2;
+    }
+
+    .has-text-align-right {
+        @apply text-right;
+    }
+}

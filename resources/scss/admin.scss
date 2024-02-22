@@ -1,0 +1,9 @@
+@import "tailwindcss/tailwind";
+
+[x-cloak] {
+    display: none !important;
+}
+
+.ck.ck-toolbar.ck-toolbar_grouping > .ck-toolbar__items {
+    flex-wrap: wrap;
+}

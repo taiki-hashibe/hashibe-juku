@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+
+.ck-editor__editable abbr[title="publish-level:trial"] {
+    /* Necessary to render properly next to floated objects, e.g. side image case. */
+    display: flow-root;
+}
+
+.ck-content abbr[title="publish-level:trial"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2rem;
+}
+
+.ck-content abbr[title="publish-level:trial"]::before {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #8cd2ed;
+    content: "";
+}
+
+
+.ck-content abbr[title="publish-level:trial"]::after {
+    position: absolute;
+    background-color: white;
+    content: "これ以降は会員のみが閲覧できます";
+    text-align: center;
+}

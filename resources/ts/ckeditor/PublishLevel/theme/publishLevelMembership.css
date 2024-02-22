@@ -1,0 +1,36 @@
+/*
+ * Copyright (c) 2003-2023, CKSource Holding sp. z o.o. All rights reserved.
+ * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+ */
+
+
+.ck-editor__editable abbr[title="publish-level:membership"] {
+    /* Necessary to render properly next to floated objects, e.g. side image case. */
+    display: flow-root;
+}
+
+.ck-content abbr[title="publish-level:membership"] {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 2rem;
+}
+
+.ck-content abbr[title="publish-level:membership"]::before {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #ffc952;
+    content: "";
+}
+
+
+.ck-content abbr[title="publish-level:membership"]::after {
+    position: absolute;
+    background-color: white;
+    content: "これ以降は有料会員のみが閲覧できます";
+    text-align: center;
+}
