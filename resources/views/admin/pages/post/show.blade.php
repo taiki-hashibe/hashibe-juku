@@ -95,60 +95,15 @@
             </x-admin.row>
         @endif
         <x-admin.row>
-            <x-slot name="label">作成者</x-slot>
-            <x-slot name="value">
-                @if ($item->admin)
-                    <a href="{{ route('admin.admin.show', [
-                        'admin' => $item->admin->id,
-                    ]) }}"
-                        class="underline">{{ $item->admin->name }}</a>
-                @else
-                    <span>削除された管理者</span>
-                @endif
-            </x-slot>
-        </x-admin.row>
-        <x-admin.row>
             <x-slot name="label">アクセス数</x-slot>
             <x-slot name="value">
                 {{ $item->accessLogs->count() }}
             </x-slot>
         </x-admin.row>
-        @if ($item->exercises->count() !== 0)
-            <x-admin.row>
-                <x-slot name="label">演習</x-slot>
-                <x-slot name="value">
-                    <ul>
-                        @foreach ($item->exercises as $exercise)
-                            <li class="mb-2">
-                                <p class="font-bold mb-1">{{ $exercise->question }}</p>
-                                <ul class="ps-5">
-                                    @foreach ($exercise->choices as $choice)
-                                        <li>
-                                            <p class="flex items-center relative">
-                                                @if ($choice->is_correct)
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor"
-                                                        class="w-4 h-4 text-green-500 absolute -left-4">
-                                                        <path fill-rule="evenodd"
-                                                            d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-                                                @endif
-                                                {{ $choice->text }}
-                                            </p>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
-                </x-slot>
-            </x-admin.row>
-        @endif
         <div class="flex justify-end mt-8 md:px-4">
             @if ($item->isEditable())
                 <div>
-                    @if ($item->status === 'publish')
+                    {{-- @if ($item->status === 'publish')
                         <x-admin.anchor variant="orange" class="me-2" target="_blank"
                             href="{{ $item->category
                                 ? route('content.post', [
@@ -158,7 +113,7 @@
                                 : route('post.post', [
                                     'post' => $item->slug,
                                 ]) }}">ページを確認する</x-admin.anchor>
-                    @endif
+                    @endif --}}
                     <x-admin.anchor variant="primary" class="me-2"
                         href="{{ route('admin.post.edit', [
                             'post' => $item->id,

@@ -53,10 +53,6 @@ class PostController extends Controller
             'publish_level' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
-            'exercises' => 'nullable|array',
-            'exercises.*.question' => 'required|string|max:255',
-            'exercises.*.choices' => ['required', 'array', new ExerciseChoiceIsCorrect()],
-            'exercises.*.choices.*.text' => 'required|string|max:255',
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -78,30 +74,6 @@ class PostController extends Controller
             'admin_id' => $admin->id,
             'order' => ItemOrderAutoIncrement::post($categoryId),
         ]);
-        if ($request->exercises) {
-            /** @var array<int, array<string, string|bool>> $exercises */
-            $exercises = $request->exercises;
-            foreach ($exercises as $i => $ex) {
-                /** @var string $question */
-                $question = $ex['question'];
-                $exercise = Exercise::create([
-                    'post_id' => $item->id,
-                    'question' => $question,
-                    'order' => $i,
-                ]);
-                /** @var array<int, array<string, string|bool>> $choices*/
-                $choices = $ex['choices'];
-                foreach ($choices as $j => $choice) {
-                    $isCorrect = array_key_exists('is_correct', $choice);
-                    $choice = ExerciseChoice::create([
-                        'exercise_id' => $exercise->id,
-                        'text' => $choice['text'],
-                        'is_correct' => $isCorrect,
-                        'order' => $j,
-                    ]);
-                }
-            }
-        }
         return redirect()->route('admin.post.show', [
             'post' => $item->id
         ])->with('message', $item->title . 'を登録しました。');
@@ -139,10 +111,6 @@ class PostController extends Controller
             'publish_level' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
-            'exercises' => 'nullable|array',
-            'exercises.*.question' => 'required|string|max:255',
-            'exercises.*.choices' => ['required', 'array', new ExerciseChoiceIsCorrect()],
-            'exercises.*.choices.*.text' => 'required|string|max:255',
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -166,33 +134,6 @@ class PostController extends Controller
             'admin_id' => $admin->id,
             'order' => $order,
         ]);
-        $post->exercises()->delete();
-        if ($request->exercises) {
-            /** @var array<int, array<string, string|bool>> $exercises */
-            $exercises = $request->exercises;
-            foreach ($exercises as $i => $ex) {
-                /** @var string $question */
-                $question = $ex['question'];
-                $exercise = Exercise::create([
-                    'post_id' => $post->id,
-                    'question' => $question,
-                    'order' => $i,
-                ]);
-                /** @var array<int, array<string, string|bool>> $choices */
-                $choices = $ex['choices'];
-                foreach ($choices as $j => $choice) {
-                    $isCorrect = array_key_exists('is_correct', $choice);
-                    /** @var string $text */
-                    $text = $choice['text'];
-                    $choice = ExerciseChoice::create([
-                        'exercise_id' => $exercise->id,
-                        'text' => $text,
-                        'is_correct' => $isCorrect,
-                        'order' => $j,
-                    ]);
-                }
-            }
-        }
         return redirect()->route('admin.post.show', [
             'post' => $post->id
         ])->with('message', $post->title . 'を更新しました。');
