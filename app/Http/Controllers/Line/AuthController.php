@@ -18,7 +18,6 @@ class AuthController extends Controller
             'callback_url' => config('line.line_login.callback_url'),
             'client_secret' => config('line.line_login.channel_secret'),
         ];
-        dump($this->configKeys);
     }
 
     public function login()
