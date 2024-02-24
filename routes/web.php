@@ -35,7 +35,7 @@ Route::name('line.')->prefix('line')->group(function () {
         Route::get('/line-login', 'lineLogin')->name('line-login');
         Route::get('/line-callback', 'callback')->name('line-callback');
     });
-    Route::name('step.')->middleware(['auth.user:line'])->prefix('/step')->controller(\App\Http\Controllers\Line\StepMessageController::class)->group(function () {
+    Route::name('step.')->middleware(['auth.line:users'])->prefix('/step')->controller(\App\Http\Controllers\Line\StepMessageController::class)->group(function () {
         Route::get('', 'index')->name('index');
         Route::match(['GET', 'POST'], '/aewgrshtjky', 'step1')->name('step-1');
         Route::match(['GET', 'POST'], '/kuytyerswsg', 'step2')->name('step-2');
