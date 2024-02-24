@@ -43,9 +43,6 @@
                         公開ステータス</x-admin.th>
                     <x-admin.th>
                         公開範囲</x-admin.th>
-                    <x-admin.th>
-                        作成者
-                    </x-admin.th>
                     <x-admin.th></x-admin.th>
                 </x-admin.tr>
             </x-admin.thead>
@@ -82,16 +79,6 @@
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.publish-level-enum :level="$item->publish_level"></x-admin.publish-level-enum>
-                        </x-admin.td>
-                        <x-admin.td>
-                            @if ($item->admin)
-                                <a href="{{ route('admin.admin.show', [
-                                    'admin' => $item->admin->id,
-                                ]) }}"
-                                    class="max-w-24 truncate block underline">{{ $item->admin->name }}</a>
-                            @else
-                                <span>削除された管理者</span>
-                            @endif
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.anchor

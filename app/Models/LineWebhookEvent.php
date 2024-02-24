@@ -114,8 +114,8 @@ class LineWebhookEvent extends Model
         if (!array_key_exists('userId', $this->source)) {
             return null;
         }
-        $member = User::where('line_id', $this->source['userId'])->first();
-        return $member;
+        $user = User::where('line_id', $this->source['userId'])->first();
+        return $user;
     }
 
     public function isMessage(): bool

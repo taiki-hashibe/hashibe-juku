@@ -5,8 +5,6 @@ namespace App\Models;
 use App\Services\GenerateSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Arr;
 
 class Post extends Model
 {
@@ -24,6 +22,7 @@ class Post extends Model
         'revision_id',
         'order',
         'publish_level',
+        'description'
     ];
 
     protected $casts = [

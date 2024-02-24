@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'line_id',
         'status_message',
-        'picture_url'
+        'picture_url',
+        'status'
     ];
 
     public function questionnaire(): HasMany
