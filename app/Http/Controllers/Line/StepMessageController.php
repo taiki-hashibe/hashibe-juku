@@ -8,6 +8,8 @@ use App\Models\TrialLesson;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
+use LINE\Clients\MessagingApi\Model\TextMessage;
 
 class StepMessageController extends Controller
 {
@@ -124,7 +126,6 @@ class StepMessageController extends Controller
             'date_3' => $date_3,
             'request' => request()->request_value
         ]);
-
         return view('pages.line.step.trial-lesson-submit', [
             'user' => $user
         ]);

@@ -23,13 +23,19 @@ Route::controller(\App\Http\Controllers\Guest\HomeController::class)->group(func
 Route::controller(\App\Http\Controllers\AuthController::class)->group(function () {
     Route::get('/login', 'login')->name('login');
     Route::match(['GET', 'POST'], '/logout', 'logout')->name('logout');
-    Route::get('/line-login', 'lineLogin')->name('line_login');
-    Route::get('/line-callback', 'callback')->name('line_callback');
+    Route::get('/line-login', 'lineLogin')->name('line-login');
+    Route::get('/line-callback', 'callback')->name('line-callback');
 });
 
 Route::name('line.')->prefix('line')->group(function () {
     Route::post('/webhook', [\App\Http\Controllers\Line\WebhookController::class, 'index'])->name('webhook');
-    Route::name('step.')->middleware(['auth.user:users'])->prefix('/step')->controller(\App\Http\Controllers\Line\StepMessageController::class)->group(function () {
+    Route::controller(\App\Http\Controllers\Line\AuthController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
+        Route::match(['GET', 'POST'], '/logout', 'logout')->name('logout');
+        Route::get('/line-login', 'lineLogin')->name('line-login');
+        Route::get('/line-callback', 'callback')->name('line-callback');
+    });
+    Route::name('step.')->middleware(['auth.user:line'])->prefix('/step')->controller(\App\Http\Controllers\Line\StepMessageController::class)->group(function () {
         Route::get('', 'index')->name('index');
         Route::match(['GET', 'POST'], '/aewgrshtjky', 'step1')->name('step-1');
         Route::match(['GET', 'POST'], '/kuytyerswsg', 'step2')->name('step-2');

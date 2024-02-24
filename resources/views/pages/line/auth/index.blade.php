@@ -9,7 +9,7 @@
                 下のボタンをタップして認証を完了してページを閲覧しよう！
             </p>
             <a class="block w-full px-6 py-2 text-white outline-1 font-bold bg-line duration-200 hover:bg-line-active"
-                href="{{ route('line-login') }}">
+                href="{{ route('line.line-login') }}">
                 <div class="flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 me-3"
                         viewBox="0 0 16 16">

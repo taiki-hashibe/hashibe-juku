@@ -101,7 +101,6 @@ trait LineSignup
     {
         $accessToken = $this->getAccessToken($request);
         $profile = $this->getProfile($accessToken);
-
         $model = app()->make($this->modelClass);
         $user = $model->where($this->lineIdColumnName, $profile->userId)->first();
         if ($user) {

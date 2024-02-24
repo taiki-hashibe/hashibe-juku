@@ -7,6 +7,11 @@ return [
         'channel_secret' => env('LINE_LOGIN_CHANNEL_SECRET'),
         'callback_url' => env('LINE_LOGIN_CALLBACK_URL'),
     ],
+    'line_login' => [
+        'channel_id' => env('LINE_LINE_LOGIN_CHANNEL_ID'),
+        'channel_secret' => env('LINE_LINE_LOGIN_CHANNEL_SECRET'),
+        'callback_url' => env('LINE_LINE_LOGIN_CALLBACK_URL'),
+    ],
     'messaging_api' => [
         'channel_id' => env('LINE_MESSAGING_API_CHANNEL_ID'),
         'channel_secret' => env('LINE_MESSAGING_API_CHANNEL_SECRET'),
