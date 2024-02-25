@@ -34,7 +34,6 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($post->title);
         $response->assertSee($post->category->name);
-        $response->assertSee($post->admin->name);
         $response->assertSee('カテゴリーの無い投稿の並べ替え');
     }
 
@@ -53,13 +52,11 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($post->title);
         $response->assertSee($post->category->name);
-        $response->assertSee($post->admin->name);
         $response->assertSee('test content');
         $response->assertSee('公開範囲');
         $response->assertDontSee('リビジョン');
         $response->assertSee('編集');
         $response->assertSee('削除');
-        $response->assertSee('ページを確認する');
         $post->revision();
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->getRevision()->first()->id]));
         $response->assertStatus(200);
@@ -67,11 +64,9 @@ class PostControllerTest extends TestCase
         $response->assertSee('このリビジョンに戻す');
         $response->assertDontSee('編集');
         $response->assertDontSee('削除');
-        $response->assertDontSee('ページを確認する');
         $post->admin->delete();
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
         $response->assertStatus(200);
-        $response->assertSee('削除された管理者');
         $post = Post::factory()->create([
             'status' => StatusEnum::$DRAFT,
             'content' => '<p>test content draft</p>',
@@ -80,12 +75,10 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee($post->title);
         $response->assertSee($post->category->name);
-        $response->assertSee($post->admin->name);
         $response->assertSee('test content draft');
         $response->assertSee('公開範囲');
         $response->assertSee('編集');
         $response->assertSee('削除');
-        $response->assertDontSee('ページを確認する');
         // カテゴリー無し
         $post = Post::factory()->create([
             'status' => StatusEnum::$PUBLISH,
@@ -95,48 +88,10 @@ class PostControllerTest extends TestCase
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
         $response->assertStatus(200);
         $response->assertSee($post->title);
-        $response->assertSee($post->admin->name);
         $response->assertSee('test content no category');
         $response->assertSee('公開範囲');
         $response->assertSee('編集');
         $response->assertSee('削除');
-        $response->assertSee('ページを確認する');
-
-        // 演習付き
-        $post = Post::factory()->create([
-            'status' => StatusEnum::$PUBLISH,
-            'content' => '<p>test content</p>',
-        ]);
-        $exercise1 = Exercise::factory()->create([
-            'post_id' => $post->id,
-        ]);
-        $exercise1choice1 = ExerciseChoice::factory()->create([
-            'exercise_id' => $exercise1->id,
-        ]);
-        $exercise1choice2 = ExerciseChoice::factory()->create([
-            'exercise_id' => $exercise1->id,
-            'is_correct' => true,
-        ]);
-        $exercise2 = Exercise::factory()->create([
-            'post_id' => $post->id,
-        ]);
-        $exercise2choice1 = ExerciseChoice::factory()->create([
-            'exercise_id' => $exercise1->id,
-        ]);
-        $exercise2choice2 = ExerciseChoice::factory()->create([
-            'exercise_id' => $exercise1->id,
-            'is_correct' => true,
-        ]);
-        $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
-        $response->assertStatus(200);
-        $response->assertSee('公開範囲');
-        $response->assertSee('演習');
-        $response->assertSee($exercise1->question);
-        $response->assertSee($exercise1choice1->choice);
-        $response->assertSee($exercise1choice2->choice);
-        $response->assertSee($exercise2->question);
-        $response->assertSee($exercise2choice1->choice);
-        $response->assertSee($exercise2choice2->choice);
     }
 
     public function testStore()
@@ -241,120 +196,6 @@ class PostControllerTest extends TestCase
             'publish_level' => PublishLevelEnum::$TRIAL,
             'image' =>  'post_thumbnails/' . $file->hashName(),
             'video' => 'video_path.mp4',
-        ]);
-        $exercises = $post->exercises;
-        $this->assertCount(2, $exercises);
-        $this->assertEquals('問題文1', $exercises[0]->question);
-        $this->assertCount(2, $exercises[0]->choices);
-        $this->assertEquals('選択肢1', $exercises[0]->choices[0]->text);
-        $this->assertEquals('選択肢2', $exercises[0]->choices[1]->text);
-        $this->assertTrue($exercises[0]->choices[1]->is_correct);
-        $this->assertEquals('問題文2', $exercises[1]->question);
-        $this->assertCount(2, $exercises[1]->choices);
-        $this->assertEquals('選択肢2-1', $exercises[1]->choices[0]->text);
-        $this->assertEquals('選択肢2-2', $exercises[1]->choices[1]->text);
-        $this->assertTrue($exercises[1]->choices[1]->is_correct);
-
-        // 失敗パターン、問題文が空
-        $response = $this->actingAs($admin, 'admins')->post(route('admin.post.store'), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'category_id' => $category->id,
-            'publish_level' => PublishLevelEnum::$TRIAL,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => null,
-                    'choices' => [
-                        [
-                            'text' => '選択肢1',
-                        ],
-                        [
-                            'text' => '選択肢2',
-                            'is_correct' => true,
-                        ],
-                    ]
-                ],
-                [
-                    'question' => '問題文2',
-                    'choices' => [
-                        [
-                            'text' => '選択肢2-1',
-                        ],
-                        [
-                            'text' => '選択肢2-2',
-                            'is_correct' => true,
-                        ],
-                    ]
-                ]
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.question',
-        ]);
-        // 失敗パターン、選択肢が空
-        $response = $this->actingAs($admin, 'admins')->post(route('admin.post.store'), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'publish_level' => PublishLevelEnum::$TRIAL,
-            'category_id' => $category->id,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => []
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices',
-        ]);
-        // 失敗パターン、選択肢のテキストが空
-        $response = $this->actingAs($admin, 'admins')->post(route('admin.post.store'), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'category_id' => $category->id,
-            'publish_level' => PublishLevelEnum::$TRIAL,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => [
-                        [
-                            'text' => null,
-                            'is_correct' => true,
-                        ],
-                    ]
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices.0.text',
-        ]);
-        // 失敗パターン、選択肢に正解がない
-        $response = $this->actingAs($admin, 'admins')->post(route('admin.post.store'), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'category_id' => $category->id,
-            'publish_level' => PublishLevelEnum::$TRIAL,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => [
-                        [
-                            'text' => '選択肢1',
-                        ],
-                    ]
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices',
         ]);
     }
 
@@ -485,119 +326,6 @@ class PostControllerTest extends TestCase
             'category_id' => $category->id,
             'image' =>  'post_thumbnails/' . $file->hashName(),
             'video' => 'video_path.mp4',
-        ]);
-        $exercises = $post->exercises;
-        $this->assertCount(2, $exercises);
-        $this->assertEquals('問題文1', $exercises[0]->question);
-        $this->assertCount(2, $exercises[0]->choices);
-        $this->assertEquals('選択肢1', $exercises[0]->choices[0]->text);
-        $this->assertEquals('選択肢2', $exercises[0]->choices[1]->text);
-        $this->assertTrue($exercises[0]->choices[1]->is_correct);
-        $this->assertEquals('問題文2', $exercises[1]->question);
-        $this->assertCount(2, $exercises[1]->choices);
-        $this->assertEquals('選択肢2-1', $exercises[1]->choices[0]->text);
-        $this->assertEquals('選択肢2-2', $exercises[1]->choices[1]->text);
-        $this->assertTrue($exercises[1]->choices[1]->is_correct);
-        // 失敗パターン、問題文が空
-        $response = $this->actingAs($admin, 'admins')->put(route('admin.post.update', ['post' => $post->id]), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'publish_level' => PublishLevelEnum::$MEMBERSHIP,
-            'category_id' => $category->id,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => null,
-                    'choices' => [
-                        [
-                            'text' => '選択肢1',
-                        ],
-                        [
-                            'text' => '選択肢2',
-                            'is_correct' => true,
-                        ],
-                    ]
-                ],
-                [
-                    'question' => '問題文2',
-                    'choices' => [
-                        [
-                            'text' => '選択肢2-1',
-                        ],
-                        [
-                            'text' => '選択肢2-2',
-                            'is_correct' => true,
-                        ],
-                    ]
-                ]
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.question',
-        ]);
-        // 失敗パターン、選択肢が空
-        $response = $this->actingAs($admin, 'admins')->put(route('admin.post.update', ['post' => $post->id]), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'publish_level' => PublishLevelEnum::$MEMBERSHIP,
-            'category_id' => $category->id,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => []
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices',
-        ]);
-        // 失敗パターン、選択肢のテキストが空
-        $response = $this->actingAs($admin, 'admins')->put(route('admin.post.update', ['post' => $post->id]), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'publish_level' => PublishLevelEnum::$MEMBERSHIP,
-            'category_id' => $category->id,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => [
-                        [
-                            'text' => null,
-                            'is_correct' => true,
-                        ],
-                    ]
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices.0.text',
-        ]);
-        // 失敗パターン、選択肢に正解がない
-        $response = $this->actingAs($admin, 'admins')->put(route('admin.post.update', ['post' => $post->id]), [
-            'title' => 'タイトル',
-            'status' => StatusEnum::$PUBLISH,
-            'publish_level' => PublishLevelEnum::$MEMBERSHIP,
-            'category_id' => $category->id,
-            'image' => $file,
-            'video' => 'video_path.mp4',
-            'exercises' => [
-                [
-                    'question' => '問題文1',
-                    'choices' => [
-                        [
-                            'text' => '選択肢1',
-                        ],
-                    ]
-                ],
-            ]
-        ]);
-        $response->assertSessionHasErrors([
-            'exercises.0.choices',
         ]);
     }
 

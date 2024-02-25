@@ -13,8 +13,8 @@
             <x-admin.thead>
                 <x-admin.tr>
                     <x-admin.th>
-                        ユーザーID</x-admin.th>
-                    <x-admin.th>ステータス</x-admin.th>
+                        ID</x-admin.th>
+                    <x-admin.th>名前</x-admin.th>
                     <x-admin.th></x-admin.th>
                 </x-admin.tr>
             </x-admin.thead>
@@ -22,9 +22,9 @@
                 @foreach ($items->paginate(24) as $item)
                     <x-admin.tr>
                         <x-admin.td>
-                            {{ $item->user_id }}</x-admin.td>
+                            {{ $item->id }}</x-admin.td>
                         <x-admin.td>
-                            <x-admin.publish-level-enum :level="$item->status"></x-admin.publish-level-enum>
+                            {{ $item->name }}
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.anchor
