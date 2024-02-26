@@ -126,6 +126,22 @@
                 {{ $item->accessLogs->count() }}
             </x-slot>
         </x-admin.row>
+        @if ($item->line_link)
+            <x-admin.row>
+                <x-slot name="label">公式LINE追加用URL</x-slot>
+                <x-slot name="value">
+                    {{ $item->line_link }}
+                </x-slot>
+            </x-admin.row>
+        @endif
+        @if ($item->public_release_at)
+            <x-admin.row>
+                <x-slot name="label">一般公開日時</x-slot>
+                <x-slot name="value">
+                    {{ $item->public_release_at->format('Y年m月d日 H時i分s秒') }}
+                </x-slot>
+            </x-admin.row>
+        @endif
         <div class="flex justify-end mt-8 md:px-4">
             @if ($item->isEditable())
                 <div>

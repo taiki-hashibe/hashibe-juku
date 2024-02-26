@@ -55,7 +55,9 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
             'video_free' => 'nullable|string',
-            'description' => 'nullable|string|max:1000'
+            'description' => 'nullable|string|max:1000',
+            'line_link' => 'nullable|url',
+            'public_release_at' => 'nullable|date|after:now'
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -78,6 +80,8 @@ class PostController extends Controller
             'video_free' => $request->video_free,
             'admin_id' => $admin->id,
             'order' => ItemOrderAutoIncrement::post($categoryId),
+            'line_link' => $request->line_link,
+            'public_release_at' => $request->public_release_at
         ]);
         return redirect()->route('admin.post.show', [
             'post' => $item->id
@@ -118,7 +122,9 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
             'video_free' => 'nullable|string',
-            'description' => 'nullable|string|max:1000'
+            'description' => 'nullable|string|max:1000',
+            'line_link' => 'nullable|url',
+            'public_release_at' => 'nullable|date|after:now'
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -144,6 +150,8 @@ class PostController extends Controller
             'description' => $request->description,
             'admin_id' => $admin->id,
             'order' => $order,
+            'line_link' => $request->line_link,
+            'public_release_at' => $request->public_release_at
         ]);
         return redirect()->route('admin.post.show', [
             'post' => $post->id

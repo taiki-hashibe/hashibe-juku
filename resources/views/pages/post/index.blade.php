@@ -1,50 +1,70 @@
 <x-guest-layout class="bg-white">
-    <div class="w-full flex justify-center">
-        <div class="mb-8">
+    <div class="grid grid-cols-12 gap-6">
+        <div class="col-span-9 w-full flex justify-center">
             <div class="mb-8">
-                <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
-                @if ($post->isCanView())
-                    {{-- <livewire:bookmark :post="$post" /> --}}
-                @endif
-            </div>
-            @if ($post->video)
                 <div class="mb-8">
-                    <video id="video-js" class="video video-js" playsinline controls>
-                        <source src="{{ $post->video }}">
-                    </video>
-                </div>
-            @endif
-            <x-post-content :post="$post" class="mb-8"></x-post-content>
-            <div class="flex justify-between">
-                <div class="w-1/3">
-                    @if ($prev)
-                        <p class="text-xs md:text-sm mb-1 md:ps-2">前のレッスン</p>
-                        <a href="{{ $prev->category
-                            ? route('content.post', [
-                                'category' => $prev->category->slug,
-                                'post' => $prev->slug,
-                            ])
-                            : route('post.post', [
-                                'post' => $prev->slug,
-                            ]) }}"
-                            class="block w-full truncate underline">{{ $prev->title }}</a>
+                    <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
+                    @if ($post->isCanView())
+                        {{-- <livewire:bookmark :post="$post" /> --}}
                     @endif
                 </div>
-                <div class="w-1/3">
-                    @if ($next)
-                        <p class="text-xs md:text-sm text-end mb-1 md:ps-2">次のレッスン</p>
-                        <a href="{{ $next->category
-                            ? route('content.post', [
-                                'category' => $next->category->slug,
-                                'post' => $next->slug,
-                            ])
-                            : route('post.post', [
-                                'post' => $next->slug,
-                            ]) }}"
-                            class="block w-full truncate underline text-end">{{ $next->title }}</a>
-                    @endif
+                @if ($post->video_free)
+                    <div class="mb-8">
+                        <video id="video-js" class="video video-js" playsinline controls>
+                            <source src="{{ $post->video_free }}">
+                        </video>
+                    </div>
+                @elseif ($post->video)
+                    <div class="mb-8">
+                        <video id="video-js" class="video video-js" playsinline controls>
+                            <source src="{{ $post->video }}">
+                        </video>
+                    </div>
+                @endif
+                <x-post-content :post="$post" class="mb-8"
+                    column="{{ $post->content_free ? 'content_free' : null }}"></x-post-content>
+                <div class="flex justify-between">
+                    <div class="w-1/3">
+                        @if ($prev)
+                            <p class="text-xs md:text-sm mb-1 md:ps-2">前のレッスン</p>
+                            <a href="{{ $prev->category
+                                ? route('content.post', [
+                                    'category' => $prev->category->slug,
+                                    'post' => $prev->slug,
+                                ])
+                                : route('post.post', [
+                                    'post' => $prev->slug,
+                                ]) }}"
+                                class="block w-full truncate underline">{{ $prev->title }}</a>
+                        @endif
+                    </div>
+                    <div class="w-1/3">
+                        @if ($next)
+                            <p class="text-xs md:text-sm text-end mb-1 md:ps-2">次のレッスン</p>
+                            <a href="{{ $next->category
+                                ? route('content.post', [
+                                    'category' => $next->category->slug,
+                                    'post' => $next->slug,
+                                ])
+                                : route('post.post', [
+                                    'post' => $next->slug,
+                                ]) }}"
+                                class="block w-full truncate underline text-end">{{ $next->title }}</a>
+                        @endif
+                    </div>
                 </div>
             </div>
+        </div>
+        <div class="col-span-3">
+            <ul>
+                @foreach ($post->getInTheSameCategory()->get() as $item)
+                    <li class="mb-2">
+                        <a href="" class="block px-4 py-3 rounded-md duration-100 hover:bg-slate-100">
+                            {{ $item->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
         </div>
     </div>
 </x-guest-layout>

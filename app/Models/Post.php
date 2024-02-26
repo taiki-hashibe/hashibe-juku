@@ -25,11 +25,14 @@ class Post extends Model
         'revision_id',
         'order',
         'publish_level',
-        'description'
+        'description',
+        'line_link',
+        'public_release_at'
     ];
 
     protected $casts = [
         'publish_level' => 'integer',
+        'public_release_at' => 'datetime'
     ];
 
     /**
@@ -113,6 +116,15 @@ class Post extends Model
         return $this->hasMany(CompletePost::class);
     }
 
+    public function getInTheSameCategory()
+    {
+        $category = $this->category;
+        if ($category) {
+            return $category->posts()->publish()->sortOrder();
+        }
+        return self::publish()->where('category_id', null)->sortOrder();
+    }
+
     public function revision(): void
     {
         /** @var \App\Models\Admin $admin */
@@ -131,6 +143,7 @@ class Post extends Model
             'revision_id' => $this->id,
             'order' => $this->order,
             'publish_level' => $this->publish_level,
+            'line_link' => $this->line_link
         ]);
     }
 

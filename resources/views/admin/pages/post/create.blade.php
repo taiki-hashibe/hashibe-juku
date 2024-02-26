@@ -138,6 +138,20 @@
                 </x-admin.form.select>
             </x-slot>
         </x-admin.edit-form-row>
+        <x-admin.edit-form-row>
+            <x-slot name="label">公式LINE追加用URL</x-slot>
+            <x-slot name="field">
+                <x-admin.form.input type="text" name="line_link"
+                    value="{{ old('line_link') }}"></x-admin.form.input>
+            </x-slot>
+        </x-admin.edit-form-row>
+        <x-admin.edit-form-row>
+            <x-slot name="label">一般公開日時</x-slot>
+            <x-slot name="field">
+                <x-admin.form.input type="datetime" name="public_release_at"
+                    value="{{ old('public_release_at') }}"></x-admin.form.input>
+            </x-slot>
+        </x-admin.edit-form-row>
         <div class="flex justify-end mt-8 md:px-4">
             <div>
                 <x-admin.button variant="primary" id="video-submit-button">保存</x-admin.button>
