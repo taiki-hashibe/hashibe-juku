@@ -1,8 +1,8 @@
-<input id="video-upload-route" type="hidden" value="{{ route('admin.media-upload.upload.file') }}">
-<div id="resumable-drop" class="mb-3">
-    <label id="resumable-browse"
+<input id="{{ $name }}-upload-route" type="hidden" value="{{ route('admin.media-upload.upload.file') }}">
+<div id="{{ $name }}-resumable-drop" class="mb-3">
+    <label id="{{ $name }}-resumable-browse"
         class="cursor-pointer w-full mb-4 block px-3 py-2 border border-slate-300 rounded-md text-start flex flex-col justify-center items-center py-4">
-        <div id="videoPreview" class="flex flex-col items-center">
+        <div id="{{ $name }}Preview" class="flex flex-col items-center">
             @if ($media)
                 <video id="video-js" class="video video-js" playsinline controls>
                     <source src="{{ $media }}">
@@ -18,5 +18,5 @@
             @endif
         </div>
     </label>
-    <input type="hidden" name="video" id="video-form" value="{{ old('video') ?? $media }}">
+    <input type="hidden" name="{{ $name }}" id="{{ $name }}-form" value="{{ old('video') ?? $media }}">
 </div>

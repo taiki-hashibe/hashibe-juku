@@ -156,6 +156,11 @@ class Category extends Model
         return Post::whereIn('id', $collection->pluck('id'));
     }
 
+    public function isComplete(): bool
+    {
+        return false;
+    }
+
     public function prev(): self|null
     {
 

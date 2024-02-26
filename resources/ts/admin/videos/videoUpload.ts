@@ -2,20 +2,27 @@ import Resumable from "resumablejs";
 import convert from "../../utils/converter";
 import decoder from "../../utils/decoder";
 import { ResumableMessageT } from "../../types";
-export function videoUpload() {
+export function videoUpload(name :string) {
     const uploadRouteElm = document.querySelector<HTMLInputElement>(
-        "#video-upload-route",
+        `#${name}-upload-route`,
     );
     const submitButton = document.querySelector<HTMLButtonElement>(
-        "#video-submit-button",
+        `#video-submit-button`,
     );
     const fileUpload =
-        document.querySelector<HTMLButtonElement>("#resumable-browse");
-    const fileUploadDrop = document.querySelector("#resumable-drop");
+        document.querySelector<HTMLButtonElement>(`#${name}-resumable-browse`);
+    const fileUploadDrop = document.querySelector(`#${name}-resumable-drop`);
     const token =
         document.querySelector<HTMLInputElement>("input[name=_token]");
-    const videoPreview = document.getElementById("videoPreview");
-    const form = document.querySelector<HTMLFormElement>("#video-form");
+    const videoPreview = document.getElementById(`${name}Preview`);
+    const form = document.querySelector<HTMLFormElement>(`#${name}-form`);
+    console.log(uploadRouteElm,
+        submitButton,
+        fileUpload,
+        fileUploadDrop,
+        token ,
+        videoPreview,
+        form);
     if (
         uploadRouteElm &&
         submitButton &&
@@ -41,10 +48,10 @@ export function videoUpload() {
                 submitButton.disabled = true;
                 r.upload();
 
-                videoPreview.innerHTML = `<div id="vide0-progress-container" class="flex flex-col justify-center items-center">
+                videoPreview.innerHTML = `<div id="${name}-progress-container" class="flex flex-col justify-center items-center">
                 <p class="mb-2">動画アップロード中</p>
                 <div class="w-full overflow-hidden rounded-1 border" style="height: 0.5rem">
-                    <div id="video-progress" class="bg-primary-400 h-full" style="width: 10%"></div>
+                    <div id="${name}-progress" class="bg-primary-400 h-full" style="width: 10%"></div>
                 </div>
             </div>`;
             });
@@ -64,7 +71,7 @@ export function videoUpload() {
                         videoPath.value = `${res.path}${res.name}`;
                     }
                     console.log(res);
-                    videoPreview.innerHTML = `<video id="video-js" class="video video-js" playsinline controls><source src="/storage/videos/${res.path}${res.name}"></video>`;
+                    videoPreview.innerHTML = `<video id="${name}-video-js" class="video video-js" playsinline controls><source src="/storage/videos/${res.path}${res.name}"></video>`;
                     submitButton.disabled = false;
                     form.value = res.full_path;
                 },
@@ -81,7 +88,7 @@ export function videoUpload() {
             r.on("fileProgress", function (file: Resumable.ResumableFile) {
                 const progress = file.progress(true);
                 const progressBar =
-                    document.querySelector<HTMLDivElement>("#video-progress");
+                    document.querySelector<HTMLDivElement>(`#${name}-progress`);
                 if (progressBar) {
                     progressBar.style.width = `${progress * 100}%`;
                 }

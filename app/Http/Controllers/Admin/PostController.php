@@ -48,11 +48,14 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'nullable',
+            'content_free' => 'nullable',
             'category_id' => 'nullable|exists:categories,id',
             'status' => 'required',
             'publish_level' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
+            'video_free' => 'nullable|string',
+            'description' => 'nullable|string|max:1000'
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -65,12 +68,14 @@ class PostController extends Controller
         $item = Post::create([
             'title' => $request->title,
             'content' => $request->content,
+            'content_free' => $request->content_free,
             'slug' => GenerateSlug::generate($title, Post::class),
             'category_id' => $request->category_id ?? null,
             'status' => $request->status,
             'publish_level' => $request->publish_level,
             'image' => $file ? $file->store('post_thumbnails', 'public') : null,
             'video' => $request->video,
+            'video_free' => $request->video_free,
             'admin_id' => $admin->id,
             'order' => ItemOrderAutoIncrement::post($categoryId),
         ]);
@@ -106,11 +111,14 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'nullable',
+            'content_free' => 'nullable',
             'category_id' => 'nullable|exists:categories,id',
             'status' => 'required',
             'publish_level' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'video' => 'nullable|string',
+            'video_free' => 'nullable|string',
+            'description' => 'nullable|string|max:1000'
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -126,11 +134,14 @@ class PostController extends Controller
         $post->update([
             'title' => $request->title,
             'content' => $request->content,
+            'content_free' => $request->content_free,
             'category_id' => $request->category_id ?? null,
             'status' => $request->status,
             'publish_level' => $request->publish_level,
             'image' => $file ? $file->store('post_thumbnails', 'public') : $post->image,
             'video' => $request->video,
+            'video_free' => $request->video_free,
+            'description' => $request->description,
             'admin_id' => $admin->id,
             'order' => $order,
         ]);

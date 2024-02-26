@@ -30,9 +30,53 @@
             </x-slot>
         </x-admin.edit-form-row>
         <x-admin.edit-form-row>
+            <x-slot name="label">サムネイル画像</x-slot>
+            <x-slot name="field">
+                <label x-data="{ imagePreview: {{ $item->image ? $item->thumbnail() : null }} }"
+                    class="cursor-pointer w-full mb-4 block px-3 py-2 border border-slate-300 rounded-md text-start flex flex-col justify-center items-center py-4">
+                    <template x-if="imagePreview">
+                        <div class="w-40 aspect-video rounded-sm overflow-hidden border-2">
+                            <img class="w-full h-full object-cover" :src="imagePreview" class="imgPreview"
+                                alt="">
+                        </div>
+                    </template>
+                    <template x-if="!imagePreview">
+                        <div class="flex flex-col items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6 opacity-60 mb-3">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                            </svg>
+                            <span class="text-sm opacity-60">アップロード</span>
+                        </div>
+                    </template>
+                    <input type="file" name="image" class="hidden" accept="image/*" wire:model="file"
+                        @change="setImagePreview">
+                    <script>
+                        function setImagePreview(event) {
+                            const file = event.target.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = (e) => {
+                                    this.imagePreview = e.target.result;
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        }
+                    </script>
+                </label>
+            </x-slot>
+        </x-admin.edit-form-row>
+        <x-admin.edit-form-row>
             <x-slot name="label">動画</x-slot>
             <x-slot name="field">
-                <x-admin.media-upload :media="$item->video"></x-admin.media-upload>
+                <x-admin.media-upload :media="$item->video" name="video"></x-admin.media-upload>
+            </x-slot>
+        </x-admin.edit-form-row>
+        <x-admin.edit-form-row>
+            <x-slot name="label">動画(フリー)</x-slot>
+            <x-slot name="field">
+                <x-admin.media-upload :media="$item->video_free" name="video_free"></x-admin.media-upload>
             </x-slot>
         </x-admin.edit-form-row>
         <x-admin.edit-form-row>
@@ -42,6 +86,23 @@
                 <textarea id="editor" name="content">
                     {{ old('content') ?? $item->content }}
                 </textarea>
+            </x-slot>
+        </x-admin.edit-form-row>
+
+        <x-admin.edit-form-row>
+            <x-slot name="label">記事(フリー)</x-slot>
+            <x-slot name="field">
+                {{-- @livewire('admin.post-image-finder') --}}
+                <textarea id="editor-free" name="content_free">
+                    {{ old('content_free') ?? $item->content_free }}
+                </textarea>
+            </x-slot>
+        </x-admin.edit-form-row>
+        <x-admin.edit-form-row>
+            <x-slot name="label">詳細</x-slot>
+            <x-slot name="field">
+                <x-admin.form.textarea
+                    name="description">{{ old('description') ?? $item->description }}</x-admin.form.textarea>
             </x-slot>
         </x-admin.edit-form-row>
         <x-admin.edit-form-row>

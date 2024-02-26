@@ -27,6 +27,23 @@ Route::controller(\App\Http\Controllers\AuthController::class)->group(function (
     Route::get('/line-callback', 'callback')->name('line-callback');
 });
 
+Route::name('category.')->controller(\App\Http\Controllers\CategoryController::class)->group(function () {
+    Route::get('/category/{category}', 'detail')->name('detail');
+    Route::get('/category', 'index')->name('category');
+});
+
+Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
+    Route::get('/content/{post}', 'post')->name('post');
+    Route::get('/{category}/{post}', 'index')->name('category');
+});
+
+Route::name('user.')->prefix('user')->middleware(['auth.user:users'])->group(function () {
+    Route::controller(\App\Http\Controllers\PostController::class)->group(function () {
+        Route::get('/{category}/{post}', 'index')->name('category');
+        Route::get('/post/{post}', 'post')->name('post');
+    });
+});
+
 Route::name('line.')->prefix('line')->group(function () {
     Route::post('/webhook', [\App\Http\Controllers\Line\WebhookController::class, 'index'])->name('webhook');
     Route::controller(\App\Http\Controllers\Line\AuthController::class)->group(function () {

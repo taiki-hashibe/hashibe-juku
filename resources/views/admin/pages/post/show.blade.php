@@ -27,13 +27,31 @@
                 </x-slot>
             </x-admin.row>
         @endif
+        @if ($item->video_free)
+            <x-admin.row>
+                <x-slot name="label">動画(フリー)</x-slot>
+                <x-slot name="value">
+                    <video id="video-js" class="video video-js" playsinline controls>
+                        <source src="{{ $item->video_free }}">
+                    </video>
+                </x-slot>
+            </x-admin.row>
+        @endif
         <x-admin.row>
             <x-slot name="label">記事</x-slot>
             <x-slot name="value">
                 <x-post-content :post="$item"></x-post-content>
             </x-slot>
         </x-admin.row>
-        {{-- @if ($item->thumbnail())
+        @if ($item->content_free)
+            <x-admin.row>
+                <x-slot name="label">記事(フリー)</x-slot>
+                <x-slot name="value">
+                    <x-post-content :post="$item" column="content_free"></x-post-content>
+                </x-slot>
+            </x-admin.row>
+        @endif
+        @if ($item->thumbnail())
             <x-admin.row>
                 <x-slot name="label">サムネイル画像</x-slot>
                 <x-slot name="value">
@@ -42,7 +60,15 @@
                     </div>
                 </x-slot>
             </x-admin.row>
-        @endif --}}
+        @endif
+        @if ($item->description)
+            <x-admin.row>
+                <x-slot name="label">詳細</x-slot>
+                <x-slot name="value">
+                    <p class="whitespace-pre-line">{{ $item->description }}</p>
+                </x-slot>
+            </x-admin.row>
+        @endif
         @if ($item->category)
             <x-admin.row>
                 <x-slot name="label">カテゴリー</x-slot>

@@ -24,14 +24,15 @@ class PostFactory extends Factory
     {
         $id = Post::max('id') + 1;
         $title = $id . '_' . Str::random(10);
+        $category = Category::inRandomOrder()->first();
         return [
             'title' => $title,
-            'content' => fake()->paragraphs(3, true),
+            'content' => '<h2>テストの投稿</h2><p>テスト</p><p><abbr title="publish-level:membership">-</abbr></p><p>有料会員のみ</p>',
             'slug' => GenerateSlug::generate($title, Post::class),
             'status' => fake()->randomElement(['publish', 'draft']),
             'image' => null,
-            'category_id' => Category::factory(),
-            'admin_id' => Admin::factory(),
+            'video' => 'http://127.0.0.1:8000/storage/video/1gaweyjgegei.mp4',
+            'category_id' => 3 < random_int(0, 10) ? Category::factory() : (3 < random_int(0, 10) ? $category : null),
             'order' => fake()->numberBetween(1, 10),
             'publish_level' => PublishLevelEnum::$MEMBERSHIP
         ];

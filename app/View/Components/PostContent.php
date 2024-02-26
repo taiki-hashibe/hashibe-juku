@@ -12,6 +12,7 @@ use Illuminate\View\Component;
 class PostContent extends Component
 {
     public Post $post;
+    public string $column = 'content';
     public string|null $content;
     /**
      * @var array<int,array<string, string>>
@@ -24,10 +25,11 @@ class PostContent extends Component
      *
      * @return void
      */
-    public function __construct(Post $post)
+    public function __construct(Post $post, string $column = 'content')
     {
         $this->post = $post;
-        $this->content = $post->content;
+        $this->column = $column;
+        $this->content = $post->{$this->column};
         if (auth('admins')->check()) {
             $this->isCanView = true;
             $this->parse();

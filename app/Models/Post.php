@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Services\GenerateSlug;
+use App\Services\PostContentParser\PublishLevelParser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,10 +14,12 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
+        'content_free',
         'slug',
         'status',
         'image',
         'video',
+        'video_free',
         'category_id',
         'admin_id',
         'revision_id',
@@ -117,9 +120,11 @@ class Post extends Model
         self::create([
             'title' => $this->title,
             'content' => $this->content,
+            'content_free' => $this->content_free,
             'slug' => GenerateSlug::generate('revision_' . $this->slug, self::class),
             'status' => StatusEnum::$REVISION,
             'video' => $this->video,
+            'video_free' => $this->video_free,
             'image' => $this->image,
             'category_id' => $this->category_id,
             'admin_id' => $admin->id,
@@ -148,6 +153,15 @@ class Post extends Model
     public function thumbnail(): string|null
     {
         return $this->image ? asset('storage/' . $this->image) : asset('images/post-thumbnail-default.png');
+    }
+
+    public function getDescription(): string
+    {
+        if ($this->description) {
+            return $this->description;
+        }
+        $content = PublishLevelParser::parse($this->content);
+        return strip_tags($content);
     }
 
     public function prev(): self|null

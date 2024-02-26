@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class MediaUpload extends Component
 {
     public string|null $media = null;
+    public string $name;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct(string $media = null)
+    public function __construct(string $name, string $media = null)
     {
         $this->media = $media;
+        $this->name = $name;
     }
 
     /**

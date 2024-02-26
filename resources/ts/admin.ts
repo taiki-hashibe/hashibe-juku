@@ -1,6 +1,7 @@
 import "../scss/admin.scss";
 import { videoUpload } from "./admin/videos/videoUpload";
-videoUpload();
+videoUpload("video");
+videoUpload("video_free");
 import Alpine from "alpinejs";
 window.Alpine = Alpine;
 
