@@ -60,7 +60,9 @@ class CategoryControllerTest extends TestCase
         $admin = Admin::factory()->create();
         $response = $this->actingAs($admin, 'admins')->get(route('admin.category.show', ['category' => 1]));
         $response->assertStatus(404);
-        $category = Category::factory()->create();
+        $category = Category::factory([
+            'parent_id' => null
+        ])->create();
         $response = $this->actingAs($admin, 'admins')->get(route('admin.category.show', ['category' => $category->id]));
         $response->assertStatus(200);
         $response->assertSee($category->name);
@@ -68,7 +70,9 @@ class CategoryControllerTest extends TestCase
         $response->assertDontSee('親カテゴリー');
         $response->assertDontSee('子カテゴリー');
         $category->update([
-            'parent_id' => Category::factory()->create()->id,
+            'parent_id' => Category::factory([
+                'parent_id' => null
+            ])->create()->id,
         ]);
         $response = $this->actingAs($admin, 'admins')->get(route('admin.category.show', ['category' => $category->id]));
         $response->assertSee('親カテゴリー');

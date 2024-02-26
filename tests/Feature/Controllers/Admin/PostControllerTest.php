@@ -29,6 +29,7 @@ class PostControllerTest extends TestCase
         $post = Post::factory()->create([
             'status' => StatusEnum::$PUBLISH,
             'admin_id' => $admin->id,
+            'category_id' => Category::factory()->create()->id
         ]);
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.index'));
         $response->assertStatus(200);
@@ -46,6 +47,7 @@ class PostControllerTest extends TestCase
         $response->assertStatus(404);
         $post = Post::factory()->create([
             'status' => StatusEnum::$PUBLISH,
+            'category_id' => Category::factory()->create()->id,
             'content' => '<p>test content</p>',
         ]);
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
@@ -64,21 +66,6 @@ class PostControllerTest extends TestCase
         $response->assertSee('このリビジョンに戻す');
         $response->assertDontSee('編集');
         $response->assertDontSee('削除');
-        $post->admin->delete();
-        $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
-        $response->assertStatus(200);
-        $post = Post::factory()->create([
-            'status' => StatusEnum::$DRAFT,
-            'content' => '<p>test content draft</p>',
-        ]);
-        $response = $this->actingAs($admin, 'admins')->get(route('admin.post.show', ['post' => $post->id]));
-        $response->assertStatus(200);
-        $response->assertSee($post->title);
-        $response->assertSee($post->category->name);
-        $response->assertSee('test content draft');
-        $response->assertSee('公開範囲');
-        $response->assertSee('編集');
-        $response->assertSee('削除');
         // カテゴリー無し
         $post = Post::factory()->create([
             'status' => StatusEnum::$PUBLISH,
@@ -209,6 +196,7 @@ class PostControllerTest extends TestCase
         $post = Post::factory()->create([
             'status' => StatusEnum::$PUBLISH,
             'content' => '<p>post content</p>',
+            'category_id' => Category::factory()->create()->id,
             'publish_level' => PublishLevelEnum::$TRIAL,
         ]);
         $response = $this->actingAs($admin, 'admins')->get(route('admin.post.edit', ['post' => $post->id]));

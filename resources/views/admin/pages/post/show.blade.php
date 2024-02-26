@@ -148,7 +148,7 @@
                     @if ($item->status === 'publish')
                         <x-admin.anchor variant="orange" class="me-2" target="_blank"
                             href="{{ $item->category
-                                ? route('content.post', [
+                                ? route('post.category', [
                                     'post' => $item->slug,
                                     'category' => $item->category->slug,
                                 ])
