@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\View
+    public function index(): \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
     {
         if (Auth::guard('users')->check()) {
             return redirect()->route('user.post.category', [
