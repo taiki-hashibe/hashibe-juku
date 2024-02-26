@@ -174,7 +174,7 @@ class Post extends Model
             return $this->description;
         }
         $content = PublishLevelParser::parse($this->content);
-        return strip_tags($content);
+        return html_entity_decode(strip_tags($content));
     }
 
     public function prev(): self|null

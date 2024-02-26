@@ -1,21 +1,95 @@
-.content {
+.content, .ck-content {
+    @apply whitespace-pre-line;
+
+    * {
+        @apply mb-8;
+    }
+
+    p {
+        @apply leading-relaxed;
+    }
+
     p, table {
         @apply mb-4;
     }
 
+    h1 {
+        @apply text-3xl font-bold mt-8 mb-4;
+    }
+
     h2 {
-        @apply text-lg text-slate-700 font-bold mt-6 mb-2;
+        @apply text-2xl font-bold mt-6 mb-2;
+    }
+
+    h3 {
+        @apply text-lg font-bold mt-6 mb-2;
+    }
+
+    h4 {
+        @apply text-base font-bold mt-6 mb-2;
+    }
+
+    h5 {
+        @apply text-base font-bold mt-6 mb-2;
+    }
+
+    h6 {
+        @apply text-base font-bold mt-6 mb-2;
+    }
+
+    ul {
+        @apply list-disc ps-6;
     }
 
     ol {
-        @apply list-decimal ps-6 mb-4;
+        @apply list-decimal ps-6;
+    }
+
+    li {
+        @apply mb-2;
     }
 
     td {
         @apply px-2 py-2;
     }
 
+    pre {
+        @apply whitespace-pre-wrap;
+    }
+
+    a {
+        @apply text-blue-500 hover:text-blue-700 underline;
+    }
+
+    img {
+        @apply inline mb-0 min-w-4 min-h-4;
+    }
+
     .has-text-align-right {
         @apply text-right;
+    }
+
+    figure.image {
+        @apply mt-4;
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+
+            @apply mb-0;
+        }
+
+        figcaption {
+            @apply text-sm text-slate-600 dark:text-slate-100 text-center mt-1 ps-1;
+        }
+    }
+
+    hr {
+        @apply my-8 border-t border-slate-200;
+    }
+
+    code:not(.hljs) {
+        @apply text-sm text-slate-600 dark:text-white bg-slate-100 dark:bg-slate-500 rounded-sm px-1 mx-1;
     }
 }

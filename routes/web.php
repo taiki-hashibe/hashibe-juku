@@ -38,7 +38,7 @@ Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostContr
 });
 
 Route::name('user.')->prefix('user')->middleware(['auth.user:users'])->group(function () {
-    Route::controller(\App\Http\Controllers\PostController::class)->group(function () {
+    Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
         Route::get('/{category}/{post}', 'index')->name('category');
         Route::get('/post/{post}', 'post')->name('post');
     });

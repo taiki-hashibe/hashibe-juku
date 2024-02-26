@@ -19,7 +19,6 @@ class PostContent extends Component
      */
     public array $modalImages = [];
     public string $alpineData = "";
-    public bool $isCanView = false;
     /**
      * Create a new component instance.
      *
@@ -31,25 +30,20 @@ class PostContent extends Component
         $this->column = $column;
         $this->content = $post->{$this->column};
         if (auth('admins')->check()) {
-            $this->isCanView = true;
             $this->parse();
             return;
         };
-        $this->isCanView = $post->isCanView();
-        if (!$this->isCanView) {
-            $this->content = null;
-        }
         $this->parse();
     }
 
     public function parse(): void
     {
         if (!$this->content) return;
-        $this->content = PublishLevelParser::parse($this->content);
-        $this->content = ModalImageParser::parse($this->content);
-        $imageModalProperty = GetImageModalProperty::get($this->content);
-        $this->alpineData = $imageModalProperty->alpineData;
-        $this->modalImages = $imageModalProperty->modalImages;
+        // $this->content = PublishLevelParser::parse($this->content);
+        // $this->content = ModalImageParser::parse($this->content);
+        // $imageModalProperty = GetImageModalProperty::get($this->content);
+        // $this->alpineData = $imageModalProperty->alpineData;
+        // $this->modalImages = $imageModalProperty->modalImages;
     }
 
     /**

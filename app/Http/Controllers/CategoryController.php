@@ -27,8 +27,10 @@ class CategoryController extends Controller
         if ($category->description) {
             SEOMeta::setDescription($category->description);
         }
-        return view('pages.category.detail', [
+        return view('pages.category.index', [
+            'posts' => $category->posts()->publish()->get(),
             'category' => $category,
+            'categories' => $category->children()
         ]);
     }
 }

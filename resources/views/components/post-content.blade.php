@@ -1,9 +1,3 @@
-@if (!$isCanView)
-    <div
-        class="w-full px-2 py-4 border-primary-500 dark:border-app-slate-100 border-2 rounded-md bg-primary-50 dark:bg-app-slate-700">
-        <p class="text-center font-bold mb-0">この講座を閲覧するには{{ $post->publishLevelReadable() }}登録が必要です</p>
-    </div>
-@endif
 @if ($content)
     <div {!! $alpineData !!}>
         <div {{ $attributes->merge([
