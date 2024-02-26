@@ -129,7 +129,7 @@
         <div class="flex justify-end mt-8 md:px-4">
             @if ($item->isEditable())
                 <div>
-                    {{-- @if ($item->status === 'publish')
+                    @if ($item->status === 'publish')
                         <x-admin.anchor variant="orange" class="me-2" target="_blank"
                             href="{{ $item->category
                                 ? route('content.post', [
@@ -139,7 +139,7 @@
                                 : route('post.post', [
                                     'post' => $item->slug,
                                 ]) }}">ページを確認する</x-admin.anchor>
-                    @endif --}}
+                    @endif
                     <x-admin.anchor variant="primary" class="me-2"
                         href="{{ route('admin.post.edit', [
                             'post' => $item->id,
