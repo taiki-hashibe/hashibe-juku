@@ -93,7 +93,7 @@ class Category extends Model
 
     public function thumbnail(): string|null
     {
-        return $this->image ? asset('storage/' . $this->image) : asset('images/post-thumbnail-default.png');
+        return $this->image ? asset('storage/' . $this->image) : asset('images/category-thumbnail-default.png');
     }
 
     /**

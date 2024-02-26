@@ -223,7 +223,7 @@ class Post extends Model
 
     public function isCanView(): bool
     {
-        if ($this->publish_level === PublishLevelEnum::$ANYONE || auth('admins')->check()) {
+        if (auth('admins')->check()) {
             return true;
         }
         /** @var \App\Models\User|null $user */

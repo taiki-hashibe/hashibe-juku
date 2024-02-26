@@ -23,14 +23,14 @@ class Breadcrumb extends Component
         if ($this->category) {
             $breadcrumbs[] = [
                 'label' => $category->name,
-                'url' => route('category.detail', [
+                'url' => route('category.index', [
                     'category' => $this->category->slug,
                 ]),
             ];
             if ($this->category->parent) {
                 $breadcrumbs[] = [
                     'label' => $this->category->parent->name,
-                    'url' => route('category.detail', [
+                    'url' => route('category.index', [
                         'category' => $this->category->parent->slug,
                     ]),
                 ];

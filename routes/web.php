@@ -13,23 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(\App\Http\Controllers\Guest\HomeController::class)->group(function () {
+Route::controller(\App\Http\Controllers\HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home');
     Route::get('/legal', 'legal')->name('legal');
     Route::get('/privacy', 'privacy')->name('privacy');
     Route::get('/term', 'term')->name('term');
 });
 
-Route::controller(\App\Http\Controllers\AuthController::class)->group(function () {
-    Route::get('/login', 'login')->name('login');
-    Route::match(['GET', 'POST'], '/logout', 'logout')->name('logout');
-    Route::get('/line-login', 'lineLogin')->name('line-login');
-    Route::get('/line-callback', 'callback')->name('line-callback');
-});
-
 Route::name('category.')->controller(\App\Http\Controllers\CategoryController::class)->group(function () {
-    Route::get('/category/{category}', 'detail')->name('detail');
-    Route::get('/category', 'index')->name('category');
+    Route::get('/category/{category}', 'index')->name('index');
 });
 
 Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
@@ -37,10 +29,18 @@ Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostContr
     Route::get('/{category}/{post}', 'index')->name('category');
 });
 
-Route::name('user.')->prefix('user')->middleware(['auth.user:users'])->group(function () {
-    Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
-        Route::get('/{category}/{post}', 'index')->name('category');
-        Route::get('/post/{post}', 'post')->name('post');
+Route::name('user.')->prefix('user')->group(function () {
+    Route::controller(\App\Http\Controllers\User\AuthController::class)->group(function () {
+        Route::get('/login', 'login')->name('login');
+        Route::match(['GET', 'POST'], '/logout', 'logout')->name('logout');
+        Route::get('/line-login', 'lineLogin')->name('line-login');
+        Route::get('/line-callback', 'callback')->name('line-callback');
+    });
+    Route::middleware(['auth.user:users'])->group(function () {
+        Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
+            Route::get('/{category}/{post}', 'index')->name('category');
+            Route::get('/post/{post}', 'post')->name('post');
+        });
     });
 });
 

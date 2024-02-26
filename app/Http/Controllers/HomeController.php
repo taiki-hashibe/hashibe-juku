@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -14,7 +14,7 @@ class HomeController extends Controller
         $posts = Post::publish()->where('category_id', null)->get();
         $categories = Category::onlyHasPost();
         if (!$categories) abort(404);
-        return view('pages.guest.home.index', [
+        return view('pages.home.index', [
             'posts' => $posts,
             'categories' => $categories,
         ]);
@@ -23,18 +23,18 @@ class HomeController extends Controller
     public function legal()
     {
         SEOMeta::setTitle('特定商取引法に基づく表記');
-        return view('pages.guest.legal.index');
+        return view('pages.home.legal');
     }
 
     public function privacy()
     {
         SEOMeta::setTitle('プライバシーポリシー');
-        return view('pages.guest.privacy.index');
+        return view('pages.home.privacy');
     }
 
     public function term()
     {
         SEOMeta::setTitle('利用規約');
-        return view('pages.guest.term.index');
+        return view('pages.home.term');
     }
 }
