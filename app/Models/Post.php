@@ -223,15 +223,12 @@ class Post extends Model
 
     public function isCanView(): bool
     {
-        if (auth('admins')->check()) {
-            return true;
-        }
         /** @var \App\Models\User|null $user */
         $user = auth('users')->user();
         if (!$user) {
             return false;
         }
-        return $user->status >= $this->publish_level;
+        return $user->subscribed('online-salon') || UserTrialViewingPost::where('user_id', $user->id)->where('post_id', $this->id)->exists();
     }
 
     public function publishLevelReadable(): string

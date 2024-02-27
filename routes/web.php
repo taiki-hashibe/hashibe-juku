@@ -37,9 +37,19 @@ Route::name('user.')->prefix('user')->group(function () {
         Route::get('/line-callback', 'callback')->name('line-callback');
     });
     Route::middleware(['auth.user:users'])->group(function () {
-        Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostController::class)->group(function () {
+        Route::controller(\App\Http\Controllers\User\HomeController::class)->group(function () {
+            Route::get('', 'index')->name('home');
+        });
+        Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\User\PostController::class)->group(function () {
+            Route::get('/content/{post}', 'post')->name('post');
             Route::get('/{category}/{post}', 'index')->name('category');
-            Route::get('/post/{post}', 'post')->name('post');
+            Route::post('/trial-viewing', 'trialViewing')->name('trial-viewing');
+        });
+        Route::name('category.')->controller(\App\Http\Controllers\User\CategoryController::class)->group(function () {
+            Route::get('/category/{category}', 'index')->name('index');
+        });
+        Route::name('register.')->prefix('register')->controller(\App\Http\Controllers\User\RegisterController::class)->group(function () {
+            Route::get('/guidance', 'guidance')->name('guidance');
         });
     });
 });

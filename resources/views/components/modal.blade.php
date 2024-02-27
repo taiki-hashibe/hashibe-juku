@@ -5,7 +5,7 @@
     x-transition:enter-end="opacity-100" x-transition:leave="transition liner duration-200"
     x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
     <x-card x-cloak @click.outside="{{ $key }} = false"
-        class="{{ $cardClass ?? 'bg-app-white dark:bg-app-slate-800 w-full sm:w-96' }}">
+        class="{{ $cardClass ?? 'bg-white dark:bg-slate-800 w-full sm:w-96' }}">
         {{ $slot }}
     </x-card>
 </div>

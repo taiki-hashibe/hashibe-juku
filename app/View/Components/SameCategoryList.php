@@ -1,21 +1,21 @@
 <?php
 
-namespace App\View\Components\Layouts;
+namespace App\View\Components;
 
-use App\Models\User;
+use App\Models\Post;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AuthLayout extends Component
+class SameCategoryList extends Component
 {
-    public User $user;
+    public Post $post;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(Post $post)
     {
-        $this->user = auth('users')->user();
+        $this->post = $post;
     }
 
     /**
@@ -23,6 +23,6 @@ class AuthLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.auth-layout');
+        return view('components.same-category-list');
     }
 }

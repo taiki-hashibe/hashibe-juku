@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white">
+<x-layout class="bg-white">
     <x-breadcrumb :post="null" :category="isset($category) ? $category : null" />
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         @foreach ($posts as $item)
@@ -27,8 +27,7 @@
         @endforeach
     </ul>
     @foreach ($categories->get() as $item)
-        <div x-data
-            class='{{ 'p-0.5 shadow-lg rounded-lg mb-6 bg-gradient-to-r from-orange-300 via-pink-500 to-blue-400' }}'>
+        <div class='{{ 'p-0.5 shadow-lg rounded-lg mb-6 bg-gradient-to-r from-orange-300 via-pink-500 to-blue-400' }}'>
             <div class="bg-white px-4 pt-4 pb-6 rounded-md flex">
                 <div class="me-6 flex flex-col items-center relative w-28 md:w-40">
                     <div class="w-11/12 aspect-video rounded-md bg-slate-300 absolute -translate-y-2">
@@ -80,4 +79,4 @@
             </a>
         </div>
     </div>
-</x-guest-layout>
+</x-layout>

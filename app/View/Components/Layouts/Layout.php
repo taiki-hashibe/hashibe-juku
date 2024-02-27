@@ -7,15 +7,17 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class AuthLayout extends Component
+class Layout extends Component
 {
-    public User $user;
+    public User|null $user;
+    public bool $unlink;
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(bool $unlink = false)
     {
         $this->user = auth('users')->user();
+        $this->unlink = $unlink;
     }
 
     /**
@@ -23,6 +25,9 @@ class AuthLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.auth-layout');
+        if ($this->user) {
+            return view('layouts.auth-layout');
+        }
+        return view('layouts.guest-layout');
     }
 }

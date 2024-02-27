@@ -15,7 +15,7 @@ class Breadcrumb extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(\App\Models\Post $post = null, \App\Models\Category $category = null)
+    public function __construct(\App\Models\Post $post = null, \App\Models\Category $category = null, array $item = null)
     {
         $this->post = $post;
         $this->category = $category;
@@ -40,7 +40,7 @@ class Breadcrumb extends Component
         if (Auth::guard('users')->check()) {
             array_unshift($breadcrumbs, [
                 'label' => 'マイページ',
-                'url' => route('home'),
+                'url' => route('user.home'),
             ]);
         } else {
             array_unshift($breadcrumbs, [
@@ -55,6 +55,9 @@ class Breadcrumb extends Component
                     'post' => $post->slug
                 ])
             ];
+        }
+        if ($item) {
+            $breadcrumbs[] = $item;
         }
         unset($breadcrumbs[count($breadcrumbs) - 1]['url']);
         $this->breadcrumbs = $breadcrumbs;

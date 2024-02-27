@@ -12,6 +12,16 @@ class AuthController extends Controller
 {
     use LineSignup;
 
+    public function __construct()
+    {
+        $this->configKeys = [
+            'client_id' => config('line.login.channel_id'),
+            'callback_url' => config('line.login.callback_url'),
+            'client_secret' => config('line.login.channel_secret'),
+        ];
+        $this->redirectRouteName = 'user.home';
+    }
+
     public function login()
     {
         return view('pages.user.auth.index');

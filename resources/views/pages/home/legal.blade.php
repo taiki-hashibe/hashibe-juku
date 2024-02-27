@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white">
+<x-layout class="bg-white">
     <h2 class="text-slate-700 mb-12 font-bold text-lg px-4">特定商取引法に基づく表記</h2>
     <div class="wp-content px-4 mb-12">
         <figure class="wp-block-table">
@@ -61,4 +61,4 @@
         <p>※ お客様が未成年者である場合、購入申し込みが行われた時点で、法定代理人である保護者や親権者の同意があったものとみなされます。</p>
 
     </div>
-</x-guest-layout>
+</x-layout>

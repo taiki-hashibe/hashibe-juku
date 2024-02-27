@@ -24,6 +24,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Blade::component('layout', \App\View\Components\Layouts\Layout::class);
         Blade::component('guest-layout', \App\View\Components\Layouts\GuestLayout::class);
         Blade::component('auth-layout', \App\View\Components\Layouts\AuthLayout::class);
 

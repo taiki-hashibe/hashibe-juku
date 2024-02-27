@@ -15,7 +15,7 @@ class Modal extends Component
      *
      * @return void
      */
-    public function __construct(string $key, string $backdropClass = null, string $modalClass = null, string $cardClass = null)
+    public function __construct(string $key = null, string $backdropClass = null, string $modalClass = null, string $cardClass = null)
     {
         $this->backdropClass = $backdropClass;
         $this->modalClass = $modalClass;

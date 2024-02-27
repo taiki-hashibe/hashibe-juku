@@ -82,18 +82,16 @@ trait LineSignup
 
     public function getProfile($at, ?bool $associative = false): mixed
     {
-
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HTTPHEADER, array('Authorization: Bearer ' . $at));
         curl_setopt($curl, CURLOPT_URL, 'https://api.line.me/v2/profile');
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
+        // TODO
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         $res = curl_exec($curl);
         curl_close($curl);
-
         $json = json_decode($res, $associative);
-
         return $json;
     }
 

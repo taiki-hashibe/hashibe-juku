@@ -50,8 +50,6 @@ class PostController extends Controller
         SEOMeta::setDescription($post->getDescription());
         return view('pages.post.index', [
             'post' => $post,
-            'prev' => $post->prev(),
-            'next' => $post->next(),
         ]);
     }
 }

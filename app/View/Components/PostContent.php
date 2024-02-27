@@ -24,15 +24,14 @@ class PostContent extends Component
      *
      * @return void
      */
-    public function __construct(Post $post, string $column = 'content')
+    public function __construct(Post $post, string $column = null)
     {
         $this->post = $post;
-        $this->column = $column;
+        $this->column = $column ?? 'content';
+        if (!$column && !$this->post->isCanView() && $this->post->content_free) {
+            $this->column = 'content_free';
+        }
         $this->content = $post->{$this->column};
-        if (auth('admins')->check()) {
-            $this->parse();
-            return;
-        };
         $this->parse();
     }
 

@@ -10,6 +10,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Cashier\Billable;
 use Laravel\Sanctum\HasApiTokens;
 
+use function Illuminate\Events\queueable;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, Billable;
@@ -26,6 +28,15 @@ class User extends Authenticatable
         'picture_url',
         'status'
     ];
+
+    protected static function booted(): void
+    {
+        static::updated(queueable(function (User $customer) {
+            if ($customer->hasStripeId()) {
+                $customer->syncStripeCustomerDetails();
+            }
+        }));
+    }
 
     public function questionnaire(): HasMany
     {

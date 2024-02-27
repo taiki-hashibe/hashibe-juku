@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white">
+<x-layout class="bg-white">
     <h2 class="text-slate-700 mb-12 font-bold text-lg px-4">利用規約</h2>
     <div class="content px-4 mb-12">
         <!-- wp:paragraph -->
@@ -238,4 +238,4 @@
         <p class="has-text-align-right">以上</p>
         <!-- /wp:paragraph -->
     </div>
-</x-guest-layout>
+</x-layout>

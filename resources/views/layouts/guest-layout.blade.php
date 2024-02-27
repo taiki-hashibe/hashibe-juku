@@ -61,6 +61,9 @@
     </header>
     <main class="mt-20">
         <x-container>
+            @if (session('message'))
+                <x-alert status="success" title="{{ session('message') }}" class="mb-6"></x-alert>
+            @endif
             @if (isset($errors) && $errors->any())
                 <x-alert status="danger" title="エラーが発生しました" class="mb-6"></x-alert>
             @endif
