@@ -1,7 +1,7 @@
 <x-layout class="bg-white">
     <x-horizontal-layout>
         <x-slot:main>
-            <x-breadcrumb :post="$post" :category="isset($category) ? $category : null"></x-breadcrumb>
+            <x-breadcrumb :post="$post" :category="isset($category) ? $category : null" :curriculum="null"></x-breadcrumb>
             <div class="mb-8">
                 <div class="mb-8">
                     <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
