@@ -13,7 +13,9 @@ class HomeController extends Controller
     public function home(): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         if (auth('users')->check()) {
-            return redirect()->route('user.home');
+            return redirect()->route('user.' . request()->route()->getName(), [
+                'category' => request()->category
+            ]);
         }
         $posts = Post::publish()->where('category_id', null)->sortOrder()->get();
         $categories = Category::onlyHasPost()->sortOrder();

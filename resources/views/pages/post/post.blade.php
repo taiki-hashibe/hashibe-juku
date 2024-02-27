@@ -1,5 +1,5 @@
 <x-guest-layout class="bg-white">
-    {{ Breadcrumbs::render(request()->route()->getName(), $post, $category) }}
+    {{ Breadcrumbs::render(request()->route()->getName(), $post) }}
     <x-horizontal-layout>
         <x-slot:main>
             <div class="mb-8">
@@ -38,9 +38,8 @@
                                             <span>公式LINE</span>
                                         </div>
                                     </a>
-                                    <a href="{{ route('user.post.category', [
+                                    <a href="{{ route('user.post.post', [
                                         'post' => $post->slug,
-                                        'category' => $post->category->slug,
                                     ]) }}"
                                         class="block underline">
                                         既に友達追加済みの方はこちら！
@@ -53,18 +52,16 @@
                     <x-post-video :post="$post" />
                     @if ($post->video_free)
                         <x-add-official-line-navigation text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！"
-                            href="{{ route('user.post.category', [
+                            href="{{ route('user.post.post', [
                                 'post' => $post->slug,
-                                'category' => $post->category->slug,
                             ]) }}" />
                     @endif
                     <x-post-content :post="$post" class="mb-8"
                         column="{{ $post->content_free ? 'content_free' : null }}" />
                     @if ($post->content_free)
                         <x-add-official-line-navigation text="公式LINEを友達追加するとフルバージョンの記事が閲覧できます！"
-                            href="{{ route('user.post.category', [
+                            href="{{ route('user.post.post', [
                                 'post' => $post->slug,
-                                'category' => $post->category->slug,
                             ]) }}" />
                     @endif
                 @endif

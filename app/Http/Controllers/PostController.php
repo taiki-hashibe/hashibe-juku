@@ -11,8 +11,8 @@ class PostController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
     {
-        if (Auth::guard('users')->check()) {
-            return redirect()->route('user.post.category', [
+        if (auth('users')->check()) {
+            return redirect()->route('user.' . request()->route()->getName(), [
                 'category' => request()->category,
                 'post' => request()->post,
             ]);
@@ -33,22 +33,16 @@ class PostController extends Controller
 
     public function post(): \Illuminate\Contracts\View\View|\Illuminate\Http\RedirectResponse
     {
-        if (Auth::guard('users')->check()) {
-            return redirect()->route('user.post.post', [
+        if (auth('users')->check()) {
+            return redirect()->route('user.' . request()->route()->getName(), [
                 'post' => request()->post,
             ]);
         }
         $post = Post::publish()->where('slug', request()->post)->first();
         if (!$post) abort(404);
-        if ($post->category) {
-            return redirect()->route('post.category', [
-                'category' => $post->category->slug,
-                'post' => $post->slug,
-            ]);
-        }
         SEOMeta::setTitle($post->title);
         SEOMeta::setDescription($post->getDescription());
-        return view('pages.post.index', [
+        return view('pages.post.post', [
             'post' => $post,
         ]);
     }

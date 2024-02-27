@@ -1,5 +1,5 @@
 <ul>
-    @foreach ($post->getInTheSameCategory()->get() as $item)
+    @foreach ($post->getInTheSameCategory()->sortOrder()->get() as $item)
         <li class="mb-2">
             @if ($item->id === $post->id)
                 <p class="block truncate px-4 py-3 rounded-md bg-indigo-50">

@@ -11,3 +11,25 @@ use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('トップページ', route('home'));
 });
+
+Breadcrumbs::for('category.index', function (BreadcrumbTrail $trail, $category) {
+    $trail->parent('home');
+    $trail->push($category->name, route('category.index', [
+        'category' => $category->slug
+    ]));
+});
+
+Breadcrumbs::for('post.category', function (BreadcrumbTrail $trail, $post, $category) {
+    $trail->parent('category.index', $category);
+    $trail->push($post->title, route('post.category', [
+        'category' => $category->slug,
+        'post' => $post->slug,
+    ]));
+});
+
+Breadcrumbs::for('post.post', function (BreadcrumbTrail $trail, $post) {
+    $trail->parent('home');
+    $trail->push($post->title, route('post.post', [
+        'post' => $post->slug,
+    ]));
+});

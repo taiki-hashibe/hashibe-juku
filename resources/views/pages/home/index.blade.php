@@ -1,5 +1,5 @@
 <x-guest-layout class="bg-white" :guest="true">
-    {{ Breadcrumbs::render('home') }}
+    {{ Breadcrumbs::render(request()->route()->getName()) }}
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-14">
         @foreach ($posts as $item)
             <li>
