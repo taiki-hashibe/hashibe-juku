@@ -56,6 +56,7 @@
                         <span>公式LINE</span>
                     </div>
                 </a>
+                <x-gradation-anchor href="{{ route('user.login') }}">ログイン</x-gradation-anchor>
             </div>
         </nav>
     </header>

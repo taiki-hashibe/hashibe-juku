@@ -9,7 +9,7 @@
                 {{ config('app.name') }}に本入会いただくと...<br>
                 <span class="text-2xl">レッスン動画が無制限で見放題！</span><br>
             </p>
-            <x-gradation-anchor href="#register">
+            <x-gradation-anchor href="#guidance-payment-form">
                 入会する！
             </x-gradation-anchor>
         </x-gradation-container>
@@ -77,7 +77,7 @@
                 {{ config('app.name') }}は<b>コミュニティ</b>としての側面も大切にしており、ベース仲間と出会うこともできます！<br><br>
                 また、会員限定の情報も配信しており、普段の僕の練習をのぞき見することができるかもしれません！
             </p>
-            <x-gradation-anchor href="#register">
+            <x-gradation-anchor href="#guidance-payment-form">
                 入会する！
             </x-gradation-anchor>
         </div>
@@ -111,8 +111,23 @@
             他にもプロミュージシャンの活動の裏側をのぞき見することができるかもしれません！
         </p>
         <hr class="mb-14 border-slate-400">
-        <h2 class="text-4xl font-bold mb-2">
+        <h2 class="text-4xl font-bold mb-6">
             価格について
         </h2>
+        <p class="mb-14"></p>
+        <hr class="mb-14 border-slate-400">
+        <div class="mb-8" id="guidance-payment-form">
+            <h2 class="text-4xl font-bold mb-6">入会のお手続き</h2>
+            <ul class="mb-8">
+                <li>
+                    ※{{ config('app.name') }}の決済方法はクレジットカードのみとなっております。
+                </li>
+                <li>
+                    ※学生の方は保護者の同意のもとクレジットカード決済をご利用ください。
+                </li>
+            </ul>
+            <x-payment-form action="{{ route('user.register.payment') }}" :intent="$intent" :price="$price"
+                class="mb-4" />
+        </div>
     </div>
 </x-layout>

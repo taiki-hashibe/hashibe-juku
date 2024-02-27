@@ -4,8 +4,7 @@
     <x-gradation-container>
         <form id="form" action="{{ $action }}" method="post" class="mb-8">
             @csrf
-            @if (config('app.env') !== 'production')
-                {{-- TODO --}}
+            {{-- @if (config('app.env') !== 'production')
                 <p class="text-slate-400"><span class="me-2">テストカード番号</span><span
                         class="text-sm">※この項目は本番環境では表示されません</span>
                 </p>
@@ -33,10 +32,10 @@
                         Alpine.store('open', true);
                     }
                 </script>
-            @endif
-            <div class="mb-3">
+            @endif --}}
+            <div class="mb-6">
                 <label class="font-semibold ms-1 mb-1">ご利用料金</label>
-                <p class="w-full bg-white px-3 py-2 border border-slate-300 rounded-md">月額
+                <p class="">月額
                     {{ $price->unit_amount }}円</p>
             </div>
             <div>

@@ -5,10 +5,9 @@
                 <img src="{{ asset('images/line-icon.png') }}" alt="">
             </div>
             <p class="mb-8 text-center">
-                ユーザー認証が必要なページです！<br>
-                下のボタンをタップして認証を完了してページを閲覧しよう！
+                公式LINEを友達追加済みの方は下のボタンからログインしてください
             </p>
-            <a class="block w-full px-6 py-2 text-white outline-1 font-bold bg-line duration-200 hover:bg-line-active"
+            <a class="block w-full px-6 py-2 text-white outline-1 font-bold bg-line duration-200 hover:bg-line-active mb-6"
                 href="{{ route('user.line-login') }}">
                 <div class="flex justify-center items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-5 h-5 me-3"
@@ -18,6 +17,9 @@
                     </svg>
                     <span>LINEでログイン</span>
                 </div>
+            </a>
+            <a href="{{ config('line.link') }}" class="font-bold text-slate-600 underline hover:text-slate-800">
+                友達追加済みでない方はこちら！
             </a>
         </div>
     </div>
