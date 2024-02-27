@@ -50,6 +50,8 @@ Route::name('user.')->prefix('user')->group(function () {
         });
         Route::name('register.')->prefix('register')->controller(\App\Http\Controllers\User\RegisterController::class)->group(function () {
             Route::get('/guidance', 'guidance')->name('guidance');
+            Route::get('/payment', 'payment')->name('payment');
+            Route::post('/register', 'register')->name('register');
         });
     });
 });
