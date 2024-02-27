@@ -28,6 +28,7 @@
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
     {!! SEO::generate() !!}
     @vite('resources/ts/app.ts')
+    @livewireStyles
 </head>
 
 <body {{ $attributes->merge([
@@ -86,6 +87,7 @@
         </ul>
         <p class="text-sm text-slate-700">&copy;{{ config('app.name') }}2023</p>
     </footer>
+    @livewireScripts
 </body>
 
 </html>

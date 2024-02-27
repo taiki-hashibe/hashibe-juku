@@ -28,6 +28,7 @@
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
     {!! SEO::generate() !!}
     @vite('resources/ts/app.ts')
+    @livewireStyles
 </head>
 
 <body {{ $attributes->merge([
@@ -40,7 +41,7 @@
                     <x-logo class="md:ps-4 h-12 py-3"></x-logo>
                 </div>
             @else
-                <a href="{{ route('home') }}" aria-label="トップページ">
+                <a href="{{ route('user.home') }}" aria-label="トップページ">
                     <x-logo class="md:ps-4 h-12 py-3"></x-logo>
                 </a>
             @endif
@@ -134,6 +135,7 @@
         </ul>
         <p class="text-sm text-slate-700">&copy;{{ config('app.name') }}2023</p>
     </footer>
+    @livewireScripts
 </body>
 
 </html>

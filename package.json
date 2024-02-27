@@ -54,7 +54,6 @@
         "@ckeditor/ckeditor5-watchdog": "40.2.0",
         "@types/alpinejs": "^3.13.6",
         "@types/sortablejs": "^1.15.8",
-        "alpinejs": "^3.13.5",
         "autoprefixer": "^10.4.16",
         "axios": "^1.5.0",
         "css-loader": "^6.10.0",

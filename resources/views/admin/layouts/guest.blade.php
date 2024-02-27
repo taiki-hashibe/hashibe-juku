@@ -9,6 +9,7 @@
     @vite('resources/ts/admin.ts')
     <link rel="shortcut icon" href="{{ asset('/favicon.ico') }}">
     <title>{{ config('app.name') }} | 管理画面</title>
+    @livewireStyles
 </head>
 
 <body class="min-h-screen text-app-color bg-slate-100">
@@ -20,6 +21,7 @@
     <main class="mt-20">
         {{ $slot }}
     </main>
+    @livewireScripts
 </body>
 
 </html>
