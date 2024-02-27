@@ -57,6 +57,8 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('/curriculum/{curriculum:slug}', 'index')->name('index');
             Route::get('/curriculum/post/{curriculum:slug}/{post:slug}', 'post')->name('post');
         });
+        Route::get('/bookmark', [\App\Http\Controllers\User\BookmarkController::class, 'index'])->name('bookmark');
+        Route::get('/complete', [\App\Http\Controllers\User\CompleteController::class, 'index'])->name('complete');
         Route::name('register.')->prefix('register')->controller(\App\Http\Controllers\User\RegisterController::class)->group(function () {
             Route::get('/guidance', 'guidance')->name('guidance');
             Route::post('/register', 'register')->name('register');

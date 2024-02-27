@@ -64,4 +64,14 @@ class User extends Authenticatable
         }
         return $routeNames;
     }
+
+    public function bookmarks()
+    {
+        return $this->belongsToMany(Post::class, 'bookmarks');
+    }
+
+    public function completes()
+    {
+        return $this->belongsToMany(Post::class, 'complete_posts');
+    }
 }
