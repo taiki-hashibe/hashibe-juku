@@ -123,6 +123,71 @@ class HomeControllerTest extends TestCase
         $response->assertDontSee($curriculum->name);
         // 投稿が存在するので、公式LINEの追加ボタンが表示されない
         $response->assertDontSee(asset('images/line-icon.png'));
+        $post->delete();
+
+        // 投稿は並び順通りになっている
+        $post2 = Post::factory()->create([
+            'order' => 2
+        ]);
+        $post1 = Post::factory()->create([
+            'order' => 1
+        ]);
+        $post0 = Post::factory()->create([
+            'order' => 0
+        ]);
+        $response = $this->get(route('home'));
+        $response->assertSeeInOrder([
+            $post0->title,
+            $post1->title,
+            $post2->title,
+        ]);
+        // カテゴリーは並び順通りになっている
+        $category2 = Category::factory()->create([
+            'order' => 2
+        ]);
+        $category1 = Category::factory()->create([
+            'order' => 1
+        ]);
+        $category0 = Category::factory()->create([
+            'order' => 0
+        ]);
+        $post0->update(['category_id' => $category0->id]);
+        $post1->update(['category_id' => $category1->id]);
+        $post2->update(['category_id' => $category2->id]);
+        $response = $this->get(route('home'));
+        $response->assertSeeInOrder([
+            $category0->name,
+            $category1->name,
+            $category2->name,
+        ]);
+        // カリキュラムは並び順通りになっている
+        $curriculum2 = Curriculum::factory()->create([
+            'order' => 2
+        ]);
+        $curriculum1 = Curriculum::factory()->create([
+            'order' => 1
+        ]);
+        $curriculum0 = Curriculum::factory()->create([
+            'order' => 0
+        ]);
+        $curriculumPost = CurriculumPost::factory()->create([
+            'curriculum_id' => $curriculum0->id,
+            'post_id' => $post0->id,
+        ]);
+        $curriculumPost = CurriculumPost::factory()->create([
+            'curriculum_id' => $curriculum1->id,
+            'post_id' => $post1->id,
+        ]);
+        $curriculumPost = CurriculumPost::factory()->create([
+            'curriculum_id' => $curriculum2->id,
+            'post_id' => $post2->id,
+        ]);
+        $response = $this->get(route('home'));
+        $response->assertSeeInOrder([
+            $curriculum0->name,
+            $curriculum1->name,
+            $curriculum2->name,
+        ]);
 
         // ユーザー認証済みであればユーザーページにリダイレクトする
         $user = User::factory()->create();

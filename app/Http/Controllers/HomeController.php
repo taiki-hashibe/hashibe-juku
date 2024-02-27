@@ -15,9 +15,9 @@ class HomeController extends Controller
         if (auth('users')->check()) {
             return redirect()->route('user.home');
         }
-        $posts = Post::publish()->where('category_id', null)->get();
-        $categories = Category::onlyHasPost();
-        $curriculums = Curriculum::onlyHasPost();
+        $posts = Post::publish()->where('category_id', null)->sortOrder()->get();
+        $categories = Category::onlyHasPost()->sortOrder();
+        $curriculums = Curriculum::onlyHasPost()->sortOrder();
         return view('pages.home.index', [
             'posts' => $posts,
             'categories' => $categories,

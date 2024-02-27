@@ -27,6 +27,15 @@ class Curriculum extends Model
         return $query;
     }
 
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder<self> $query
+     * @return \Illuminate\Database\Eloquent\Builder<self>
+     */
+    public function scopeSortOrder($query): \Illuminate\Database\Eloquent\Builder
+    {
+        return $query->orderBy('order');
+    }
+
     public function posts(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'curriculum_posts')
