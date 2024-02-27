@@ -29,6 +29,11 @@ Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostContr
     Route::get('/{category}/{post}', 'index')->name('category');
 });
 
+Route::name('curriculum.')->controller(\App\Http\Controllers\CurriculumController::class)->group(function () {
+    Route::get('/curriculum/{curriculum:slug}', 'index')->name('index');
+    Route::get('/curriculum/post/{curriculum:slug}', 'post')->name('post');
+});
+
 Route::name('user.')->prefix('user')->group(function () {
     Route::controller(\App\Http\Controllers\User\AuthController::class)->group(function () {
         Route::get('/login', 'login')->name('login');
@@ -41,12 +46,16 @@ Route::name('user.')->prefix('user')->group(function () {
             Route::get('', 'index')->name('home');
         });
         Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\User\PostController::class)->group(function () {
-            Route::get('/content/{post}', 'post')->name('post');
-            Route::get('/{category}/{post}', 'index')->name('category');
+            Route::get('/content/{post:slug}', 'post')->name('post');
+            Route::get('/{category:slug}/{post:slug}', 'index')->name('category');
             Route::post('/trial-viewing', 'trialViewing')->name('trial-viewing');
         });
         Route::name('category.')->controller(\App\Http\Controllers\User\CategoryController::class)->group(function () {
-            Route::get('/category/{category}', 'index')->name('index');
+            Route::get('/category/{category:slug}', 'index')->name('index');
+        });
+        Route::name('curriculum.')->controller(\App\Http\Controllers\User\CurriculumController::class)->group(function () {
+            Route::get('/curriculum/{curriculum:slug}', 'index')->name('index');
+            Route::get('/curriculum/post/{curriculum:slug}/{post:slug}', 'post')->name('post');
         });
         Route::name('register.')->prefix('register')->controller(\App\Http\Controllers\User\RegisterController::class)->group(function () {
             Route::get('/guidance', 'guidance')->name('guidance');

@@ -11,30 +11,42 @@ class Breadcrumb extends Component
 {
     public \App\Models\Category|null $category;
     public \App\Models\Post|null $post;
+    public \App\Models\Curriculum|null $curriculum;
     public array $breadcrumbs;
     /**
      * Create a new component instance.
      */
-    public function __construct(\App\Models\Post $post = null, \App\Models\Category $category = null, array $item = null)
+    public function __construct(\App\Models\Post $post = null, \App\Models\Category $category = null, \App\Models\Curriculum $curriculum = null, array $item = null)
     {
+        $user = auth('users')->user();
+        $prefix = $user ? 'user.' : '';
         $this->post = $post;
         $this->category = $category;
+        $this->curriculum = $curriculum;
         $breadcrumbs = [];
         if ($this->category) {
             $breadcrumbs[] = [
                 'label' => $category->name,
-                'url' => route('category.index', [
+                'url' => route($prefix . 'category.index', [
                     'category' => $this->category->slug,
                 ]),
             ];
             if ($this->category->parent) {
                 $breadcrumbs[] = [
                     'label' => $this->category->parent->name,
-                    'url' => route('category.index', [
+                    'url' => route($prefix . 'category.index', [
                         'category' => $this->category->parent->slug,
                     ]),
                 ];
             }
+        }
+        if ($this->curriculum) {
+            $breadcrumbs[] = [
+                'label' => $this->curriculum->name,
+                'url' => route($prefix . 'curriculum.index', [
+                    'curriculum' => $this->curriculum->slug,
+                ]),
+            ];
         }
         $breadcrumbs = array_reverse($breadcrumbs);
         if (Auth::guard('users')->check()) {

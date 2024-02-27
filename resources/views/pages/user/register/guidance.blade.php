@@ -1,5 +1,5 @@
 <x-layout class="bg-white">
-    <x-breadcrumb :post="null" :category="null" :item="[
+    <x-breadcrumb :post="null" :category="null" :curriculum="null" :item="[
         'label' => '入会案内',
         'url' => route('user.register.guidance'),
     ]" />

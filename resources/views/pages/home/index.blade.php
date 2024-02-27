@@ -1,5 +1,5 @@
 <x-layout class="bg-white">
-    <x-breadcrumb :post="null" :category="isset($category) ? $category : null" />
+    <x-breadcrumb :post="null" :category="isset($category) ? $category : null" :curriculum="null" />
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
         @foreach ($posts as $item)
             <li>

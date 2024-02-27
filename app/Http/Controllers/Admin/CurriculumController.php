@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Curriculum;
 use App\Models\CurriculumPost;
 use App\Models\Post;
+use App\Services\GenerateSlug;
 use App\Services\ItemOrderAutoIncrement;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,7 @@ class CurriculumController extends Controller
             'name' => $request->name,
             'description' => $request->description ?? null,
             'order' => ItemOrderAutoIncrement::curriculum(),
+            'slug' => GenerateSlug::generate($request->name, Curriculum::class),
         ]);
         $item->posts()->attach($request->posts);
         return redirect()->route('admin.curriculum.show', [

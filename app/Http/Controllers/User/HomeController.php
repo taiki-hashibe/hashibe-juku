@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Curriculum;
 use App\Models\Post;
 
 class HomeController extends Controller
@@ -12,10 +13,11 @@ class HomeController extends Controller
     {
         $posts = Post::publish()->where('category_id', null)->get();
         $categories = Category::onlyHasPost();
-        if (!$categories) abort(404);
+        $curriculums = Curriculum::onlyHasPost();
         return view('pages.user.home.index', [
             'posts' => $posts,
             'categories' => $categories,
+            'curriculums' => $curriculums
         ]);
     }
 }

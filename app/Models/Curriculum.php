@@ -13,8 +13,19 @@ class Curriculum extends Model
     protected $fillable = [
         'name',
         'description',
-        'order'
+        'order',
+        'slug'
     ];
+
+    /**
+     * @param \Illuminate\Database\Eloquent\Builder<self> $query
+     * @return \Illuminate\Database\Eloquent\Builder<self>
+     */
+    public function scopeOnlyHasPost($query): \Illuminate\Database\Eloquent\Builder
+    {
+        $query->whereHas('posts');
+        return $query;
+    }
 
     public function posts(): BelongsToMany
     {

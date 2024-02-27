@@ -1,10 +1,7 @@
 <x-layout class="bg-white">
-    @if (!$post->isCanView())
-        <x-user-trial-viewing-post-modal :post="$post" />
-    @endif
     <x-horizontal-layout>
         <x-slot:main>
-            <x-breadcrumb :post="$post" :category="isset($category) ? $category : null" :curriculum="null"></x-breadcrumb>
+            <x-breadcrumb :post="$post" :category="null" :curriculum="$curriculum"></x-breadcrumb>
             <div class="mb-8">
                 <div class="mb-8">
                     <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
@@ -21,7 +18,7 @@
             </div>
         </x-slot:main>
         <x-slot:side>
-            <x-same-category-list :post="$post" />
+            <x-same-curriculum-list :curriculum="$curriculum" :post="$post" />
         </x-slot:side>
     </x-horizontal-layout>
 </x-layout>
