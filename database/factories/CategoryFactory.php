@@ -25,6 +25,7 @@ class CategoryFactory extends Factory
             'name' => $name,
             'slug' => GenerateSlug::generate($name, Category::class),
             'description' => fake()->text(),
+            'image' => fake()->imageUrl(),
             'order' => fake()->numberBetween(1, 10),
         ];
     }

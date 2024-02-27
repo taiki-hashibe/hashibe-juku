@@ -10,8 +10,11 @@ use Artesaos\SEOTools\Facades\SEOMeta;
 
 class HomeController extends Controller
 {
-    public function home()
+    public function home(): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
+        if (auth('users')->check()) {
+            return redirect()->route('user.home');
+        }
         $posts = Post::publish()->where('category_id', null)->get();
         $categories = Category::onlyHasPost();
         $curriculums = Curriculum::onlyHasPost();

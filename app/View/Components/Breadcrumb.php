@@ -16,10 +16,10 @@ class Breadcrumb extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(\App\Models\Post $post = null, \App\Models\Category $category = null, \App\Models\Curriculum $curriculum = null, array $item = null)
+    public function __construct(bool $guest = false, \App\Models\Post $post = null, \App\Models\Category $category = null, \App\Models\Curriculum $curriculum = null, array $item = null)
     {
         $user = auth('users')->user();
-        $prefix = $user ? 'user.' : '';
+        $prefix = !$guest && $user ? 'user.' : '';
         $this->post = $post;
         $this->category = $category;
         $this->curriculum = $curriculum;
@@ -49,7 +49,7 @@ class Breadcrumb extends Component
             ];
         }
         $breadcrumbs = array_reverse($breadcrumbs);
-        if (Auth::guard('users')->check()) {
+        if (!$guest && $user) {
             array_unshift($breadcrumbs, [
                 'label' => 'マイページ',
                 'url' => route('user.home'),

@@ -31,6 +31,7 @@ class Curriculum extends Model
     {
         return $this->belongsToMany(Post::class, 'curriculum_posts')
             ->withPivot('order')
-            ->orderBy('curriculum_posts.order');
+            ->orderBy('curriculum_posts.order')
+            ->publish();
     }
 }

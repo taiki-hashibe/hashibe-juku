@@ -50,7 +50,7 @@ class CategoryController extends Controller
             'slug' => GenerateSlug::generate($name, Category::class),
             'description' => $request->description ?? null,
             'parent_id' => $parentId,
-            'image' => $file ? $file->store('category_images', 'public') : null,
+            'image' => $file ? asset('storage/' . $file->store('category_images', 'public')) : null,
             'admin_id' => $admin->id,
             'order' => ItemOrderAutoIncrement::category($parentId),
         ]);
@@ -91,7 +91,7 @@ class CategoryController extends Controller
             'name' => $request->name,
             'description' => $request->description ?? null,
             'parent_id' => $request->parent_id ?? null,
-            'image' => $file ? $file->store('category_images', 'public') : $category->image,
+            'image' => $file ? asset('storage/' . $file->store('category_images', 'public')) : $category->image,
         ]);
 
         return redirect()->route('admin.category.show', [

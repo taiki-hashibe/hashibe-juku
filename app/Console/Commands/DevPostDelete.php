@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Category;
+use App\Models\Curriculum;
+use App\Models\CurriculumPost;
 use App\Models\Post;
 use Illuminate\Console\Command;
 
@@ -33,6 +35,8 @@ class DevPostDelete extends Command
         }
         Post::query()->delete();
         Category::query()->delete();
+        CurriculumPost::query()->delete();
+        Curriculum::query()->delete();
         $this->info('All posts and categories have been deleted');
     }
 }

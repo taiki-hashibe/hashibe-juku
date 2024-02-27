@@ -165,7 +165,7 @@ class Post extends Model
 
     public function thumbnail(): string|null
     {
-        return $this->image ? asset('storage/' . $this->image) : asset('images/post-thumbnail-default.png');
+        return $this->image ?? asset('images/post-thumbnail-default.png');
     }
 
     public function getDescription(): string
