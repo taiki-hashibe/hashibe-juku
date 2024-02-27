@@ -38,7 +38,15 @@
                                             <span>公式LINE</span>
                                         </div>
                                     </a>
-                                    <a href="{{ route('user.login') }}" class="block underline">
+                                    <a href="{{ $post->category
+                                        ? route('user.post.category', [
+                                            'post' => $post->slug,
+                                            'category' => $post->category->slug,
+                                        ])
+                                        : route('user.post.post', [
+                                            'post' => $post->slug,
+                                        ]) }}"
+                                        class="block underline">
                                         既に友達追加済みの方はこちら！
                                     </a>
                                 </div>
