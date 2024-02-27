@@ -1,5 +1,11 @@
 <x-layout class="bg-white">
     <x-breadcrumb :post="null" :category="null" :curriculum="$curriculum" />
+    <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
+        {{ $curriculum->name }}
+    </h2>
+    <p class="text-slate-800 ps-4 mb-8">
+        {{ $curriculum->description }}
+    </p>
     <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-14">
         @foreach ($curriculum->posts as $item)
             <li>
