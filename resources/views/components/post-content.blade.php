@@ -1,5 +1,5 @@
 @if ($content)
-    <div {!! $alpineData !!}>
+    <div>
         <div {{ $attributes->merge([
             'class' => 'content',
         ]) }}>

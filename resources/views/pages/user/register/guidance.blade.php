@@ -42,7 +42,7 @@
             特典その２
         </x-gradation-badge>
         <h2 class="text-4xl font-bold mb-2">
-            レッスン動画をお気に入り登録できる！
+            レッスン動画をブックマークできる！
         </h2>
         <p class="text-lg text-slate-600 font-bold mb-8">
             とても大切な反復練習を効率よく行うことができます
@@ -50,7 +50,7 @@
         <p class="leading-relaxed mb-20">
             技術や知識をしっかり身につけるためには、反復練習が欠かせません。<br>
             <br>
-            {{ config('app.name') }}では、<b>レッスン動画をお気に入り登録</b>することができます。<br>
+            {{ config('app.name') }}では、<b>レッスン動画をブックマーク</b>することができます。<br>
             お気に入り登録した動画はマイページから確認が可能で、反復練習を効率よく行うことができます！
         </p>
         <x-gradation-badge>

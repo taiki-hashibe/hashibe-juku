@@ -7,13 +7,13 @@
                     <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
                 </div>
                 <x-post-video :post="$post" />
-                @if (!$post->isCanView())
-                    <x-user-trial-viewing-post-navigation :post="$post" />
+                @if (auth('users')->user()->subscribed('online-salon'))
+                    <div class="flex">
+                        <livewire:bookmark :post="$post" />
+                        <livewire:complete :post="$post" />
+                    </div>
                 @endif
                 <x-post-content :post="$post" class="mb-8" />
-                @if (!$post->isCanView())
-                    <x-user-trial-viewing-post-navigation :post="$post" />
-                @endif
                 <x-post-navigation-buttons :post="$post" />
             </div>
         </x-slot:main>

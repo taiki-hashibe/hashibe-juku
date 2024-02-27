@@ -2,10 +2,6 @@ import "../scss/admin.scss";
 import { videoUpload } from "./admin/videos/videoUpload";
 videoUpload("video");
 videoUpload("video_free");
-import Alpine from "alpinejs";
-window.Alpine = Alpine;
-
-Alpine.start();
 
 import Sortable from "sortablejs";
 
