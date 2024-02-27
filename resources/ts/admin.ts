@@ -8,15 +8,18 @@ window.Alpine = Alpine;
 Alpine.start();
 
 import Sortable from "sortablejs";
-const categoryList = document.getElementById("category-list");
-if (categoryList) {
-    Sortable.create(categoryList, {
-        animation: 100,
-    });
+
+function setupSortable(id : string) {
+    const list = document.getElementById(id);
+    if (list) {
+        Sortable.create(list, {
+            animation: 100,
+        });
+    }
+
 }
-const postList = document.getElementById("post-list");
-if (postList) {
-    Sortable.create(postList, {
-        animation: 100,
-    });
-}
+setupSortable("category-list");
+setupSortable("post-list");
+setupSortable("curriculum-list");
+setupSortable("curriculum-post-list");
+

@@ -4,7 +4,7 @@
         'url' => route('user.register.guidance'),
     ]" />
     <div class="mb-8">
-        <x-gradation-container class="mb-14">
+        <x-gradation-container class="mb-24">
             <p class="text-slate-600 font-bold leading-relaxed mb-6">
                 {{ config('app.name') }}に本入会いただくと...<br>
                 <span class="text-2xl">レッスン動画が無制限で見放題！</span><br>
@@ -114,7 +114,50 @@
         <h2 class="text-4xl font-bold mb-6">
             価格について
         </h2>
-        <p class="mb-14"></p>
+        <p class="leading-relaxed mb-8">
+            ベース教室の月謝の相場は、{{ number_format(10000) }}～{{ number_format(15000) }}円程で、別途入会金などがかかる場合があります...<br>
+            <br>
+            {{ config('app.name') }}の料金は、<b
+                class="text-lg text-slate-900">月額{{ number_format($price->unit_amount + 1000) }}円</b>で、入会金は<b
+                class="text-xl text-slate-900">無料</b>となっています！<br>
+            <br><br>
+            <span class="font-bold text-3xl">さらに！</span><br>
+        </p>
+        <x-gradation-container>
+            <x-gradation-badge>
+                今だけのオープニングキャンペーン特割中！
+            </x-gradation-badge>
+            <p class="line-through text-xl fot-bold text-slate-700 mb-4">
+                月額{{ number_format($price->unit_amount + 1000) }}円
+            </p>
+            <p class="font-bold text-5xl mb-8 text-slate-900">
+                月額{{ number_format($price->unit_amount) }}円
+            </p>
+        </x-gradation-container>
+        <p class="mb-20">
+            既にレッスン動画は初心者の方に向けた基礎が学べるものから、
+            中級者、上級者の方に向けた高度なテクニックの解説まで、音楽教室で教わる内容と謙遜の無い内容になっています。<br>
+            <br>
+            しかし、僕の目指す{{ config('app.name') }}の内容は、<b>プロミュージシャンとして活動してきた経験</b>や、<b>専門学校でプロを育成してきた経験</b>を活かした<span
+                class="font-bold text-2xl">音楽の本質を学べる</span>クオリティまでもっていきたいと考えています。<br>
+            <br>
+            まだまだ僕には{{ isset($user) ? $user->name . 'さん' : 'あなた' }}にお伝えしたいことがたくさんあります！<br>
+            僕にとって理想の形には届いていないため、オープニング期間中のみこの価格で提供することにしました！<br>
+            <br>
+            <br>
+            <span class="text-xl font-bold text-slate-800 mb-10">
+                さらになんと！
+            </span>
+            <br>
+            <span
+                class="text-4xl font-bold underline decoration-pink-400 decoration-8 underline-offset-8 leading-10">今入会いただけた方はずっとこの料金で利用できます！</span>
+            <br>
+            <br>
+            オープニング期間が終了しても、{{ isset($user) ? $user->name . 'さん' : 'あなた' }}はいつまでもこの料金で利用できます！<br>
+            <br>
+            <br>
+            オープニング期間のキャンペーンは<span class="font-bold text-xl">予告無く</span>終了する場合がありますので、入会を希望する方はお早めにお手続きください！
+        </p>
         <hr class="mb-14 border-slate-400">
         <div class="mb-8" id="guidance-payment-form">
             <h2 class="text-4xl font-bold mb-6">入会のお手続き</h2>
@@ -126,8 +169,14 @@
                     ※学生の方は保護者の同意のもとクレジットカード決済をご利用ください。
                 </li>
             </ul>
-            <x-payment-form action="{{ route('user.register.payment') }}" :intent="$intent" :price="$price"
-                class="mb-4" />
+            @if ($user->subscribed('online-salon'))
+                <p>既に入会済みです！<br>
+                    引き続きレッスン動画をお楽しみください！
+                </p>
+            @else
+                <x-payment-form action="{{ route('user.register.register') }}" :intent="$intent" :price="$price"
+                    class="mb-4" />
+            @endif
         </div>
     </div>
 </x-layout>

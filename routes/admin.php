@@ -30,6 +30,9 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('post', \App\Http\Controllers\Admin\PostController::class);
         Route::match(['GET', 'POST'], '/category/sort/{category?}', [\App\Http\Controllers\Admin\CategoryController::class, 'sort'])->name('category.sort');
         Route::resource('category', \App\Http\Controllers\Admin\CategoryController::class);
+        Route::match(['GET', 'POST'], '/curriculum/sort', [\App\Http\Controllers\Admin\CurriculumController::class, 'sort'])->name('curriculum.sort');
+        Route::match(['GET', 'POST'], '/curriculum/sort/item/{curriculum}', [\App\Http\Controllers\Admin\CurriculumController::class, 'sortItem'])->name('curriculum.sort-item');
+        Route::resource('curriculum', \App\Http\Controllers\Admin\CurriculumController::class);
         Route::name('media-upload.')->controller(\App\Http\Controllers\Admin\MediaUploadController::class)->group(function () {
             Route::post('/upload', 'upload')->name('upload');
             Route::post('/upload/file', 'uploadFile')->name('upload.file');

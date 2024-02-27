@@ -26,6 +26,12 @@
             </li>
         @endforeach
     </ul>
+    <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
+        カリキュラムから探す
+    </h2>
+    <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
+        カテゴリーから探す
+    </h2>
     @foreach ($categories->get() as $item)
         <div x-data
             class='{{ 'p-0.5 shadow-lg rounded-lg mb-6 bg-gradient-to-r from-orange-300 via-pink-500 to-blue-400' }}'>
