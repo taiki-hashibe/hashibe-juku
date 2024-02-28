@@ -146,7 +146,7 @@
         <x-admin.edit-form-row>
             <x-slot name="label">一般公開日時</x-slot>
             <x-slot name="field">
-                <x-admin.form.input type="datetime" name="public_release_at"
+                <x-admin.form.input type="datetime-local" name="public_release_at"
                     value="{{ old('public_release_at') }}"></x-admin.form.input>
             </x-slot>
         </x-admin.edit-form-row>
