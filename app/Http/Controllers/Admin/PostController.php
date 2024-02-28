@@ -15,7 +15,7 @@ class PostController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View
     {
-        $items = Post::orderByDesc('created_at');
+        $items = Post::whereNot('status', StatusEnum::$REVISION)->orderByDesc('created_at');
         return view('admin.pages.post.index', [
             'items' => $items,
         ]);
