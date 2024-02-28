@@ -57,6 +57,20 @@ Breadcrumbs::for('user.category.index', function (BreadcrumbTrail $trail, $categ
     ]));
 });
 
+Breadcrumbs::for('user.curriculum.index', function (BreadcrumbTrail $trail, $curriculum) {
+    $trail->parent('user.home');
+    $trail->push($curriculum->name, route('user.curriculum.index', [
+        'curriculum' => $curriculum->slug
+    ]));
+});
+
+Breadcrumbs::for('user.curriculum.post', function (BreadcrumbTrail $trail, $curriculum, $post) {
+    $trail->parent('user.curriculum.index', $curriculum);
+    $trail->push($curriculum->name, route('user.curriculum.post', [
+        'curriculum' => $curriculum->slug,
+        'post' => $post->slug,
+    ]));
+});
 
 Breadcrumbs::for('user.register.guidance', function (BreadcrumbTrail $trail) {
     $trail->parent('user.home');

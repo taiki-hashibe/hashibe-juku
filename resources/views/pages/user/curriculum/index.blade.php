@@ -1,5 +1,5 @@
 <x-layout class="bg-white">
-    <x-breadcrumb :post="null" :category="null" :curriculum="$curriculum" />
+    {{ Breadcrumbs::render(request()->route()->getName(), $curriculum) }}
     <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
         {{ $curriculum->name }}
     </h2>

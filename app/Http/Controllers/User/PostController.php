@@ -51,6 +51,9 @@ class PostController extends Controller
     {
         $user = auth('users')->user();
         $post = Post::where('id', request()->post_id)->first();
+        if (UserTrialViewingPost::where('user_id', $user->id)->where('post_id', $post->id)->exists()) {
+            return redirect($post->getRouteCategoryOrPost())->with('message', '既にチケットを使用済みです');
+        }
         if (UserTrialViewingPost::where('user_id', $user->id)->count() > 4) {
             return redirect()->route('user.register.guidance')->with('message', 'トライアルチケットを使い切りました');
         }
@@ -60,11 +63,6 @@ class PostController extends Controller
                 'post_id' => $post->id
             ]);
         }
-        return redirect($post->category ? route('user.post.category', [
-            'post' => $post->slug,
-            'category' => $post->category->slug
-        ]) : route('user.post.post', [
-            'post' => $post->slug,
-        ]))->with('message', 'トライアルチケットを使用しました！');
+        return redirect($post->getRouteCategoryOrPost())->with('message', 'トライアルチケットを使用しました！');
     }
 }

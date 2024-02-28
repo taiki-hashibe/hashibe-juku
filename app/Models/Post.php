@@ -177,7 +177,15 @@ class Post extends Model
         if (!$this->content_free && !$this->content) {
             return null;
         }
-        $content = PublishLevelParser::parse($this->content_free ?? $this->content);
+        /** @var User $user */
+        $user = auth('users')->user();
+        $trialView = $user ? UserTrialViewingPost::where('user_id', $user->id)->where('post_id', $this->id)->exists() : false;
+        $subscribed = $user ? $user->subscribed('online-salon') : false;
+        $content = ($user && $subscribed) || $trialView ? $this->content : ($this->content_free ?? $this->content);
+        if (!$content) {
+            return null;
+        }
+        $content = PublishLevelParser::parse($content);
         return html_entity_decode(strip_tags($content));
     }
 
@@ -242,33 +250,24 @@ class Post extends Model
 
     public function getRouteCategoryOrPost(bool $auth = null)
     {
-        Log::info($this);
-        Log::info($this->category_id);
-        Log::info($this->category);
         if ($auth === true || ($auth === null && auth('users')->check())) {
-            Log::info('auth handling');
             if ($this->category) {
-                Log::info('category handling');
                 return route('user.post.category', [
                     'category' => $this->category->slug,
                     'post' => $this->slug
                 ]);
             } else {
-                Log::info('post handling');
                 return route('user.post.post', [
                     'post' => $this->slug
                 ]);
             }
         } else {
-            Log::info('no auth handling');
             if ($this->category) {
-                Log::info('category handling');
                 return route('post.category', [
                     'category' => $this->category->slug,
                     'post' => $this->slug
                 ]);
             } else {
-                Log::info('post handling');
                 return route('post.post', [
                     'post' => $this->slug
                 ]);
