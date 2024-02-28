@@ -73,9 +73,9 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         // 会員用動画が表示される
         $response->assertSee($post->video);
-        // 動画下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        $response->assertSee(config('https://example.com'));
+        // 動画下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
+        $response->assertDontSee(config('https://example.com'));
         // 記事は通常の表示
         // 一般公開用コンテンツが表示される
         $response->assertDontSee($post->content);
@@ -95,14 +95,14 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         // 会員用動画が表示される
         $response->assertSee($post->video);
-        // 動画下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        $response->assertSee(config('https://example.com'));
+        // 動画下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
+        $response->assertDontSee(config('https://example.com'));
         // 会員用コンテンツが表示される
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
-        // 記事下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
+        // 記事下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
 
         // 動画が無い場合
         $post->update([
@@ -118,12 +118,11 @@ class PostControllerTest extends TestCase
         $response->assertDontSee($post->video);
         // 動画下に公式LINEへの誘導が表示されない
         $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        // 記事は通常の表示
         // 会員用コンテンツが表示される
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
-        // 記事下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
+        // 記事下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
 
         // コンテンツが無い場合
         $post->update([
@@ -143,7 +142,7 @@ class PostControllerTest extends TestCase
         // 会員用コンテンツが表示されない
         $response->assertDontSee($post->content);
         $response->assertDontSee($post->content_free);
-        // 記事下に公式LINEへの誘導が表示されない
+        // 記事下の公式LINEへの誘導は表示されない
         $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
         // meta=descriptionはデフォルトになる
         $response->assertSee(config('seotools.meta.defaults.description'));
@@ -254,9 +253,8 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         // 会員用動画が表示される
         $response->assertSee($post->video);
-        // 動画下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        $response->assertSee(config('https://example.com'));
+        // 動画下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
         // 記事は通常の表示
         // 一般公開用コンテンツが表示される
         $response->assertDontSee($post->content);
@@ -275,14 +273,14 @@ class PostControllerTest extends TestCase
         $response->assertStatus(200);
         // 会員用動画が表示される
         $response->assertSee($post->video);
-        // 動画下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        $response->assertSee(config('https://example.com'));
+        // 動画下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
+        $response->assertDontSee(config('https://example.com'));
         // 会員用コンテンツが表示される
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
-        // 記事下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
+        // 記事下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
 
         // 動画が無い場合
         $post->update([
@@ -297,12 +295,11 @@ class PostControllerTest extends TestCase
         $response->assertDontSee($post->video);
         // 動画下に公式LINEへの誘導が表示されない
         $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
-        // 記事は通常の表示
         // 会員用コンテンツが表示される
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
-        // 記事下に公式LINEへの誘導が表示される
-        $response->assertSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
+        // 記事下の公式LINEへの誘導は表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
 
         // コンテンツが無い場合
         $post->update([

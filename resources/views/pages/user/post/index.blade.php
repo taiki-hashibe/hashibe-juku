@@ -10,7 +10,7 @@
                     <h2 class="text-lg font-bold mb-4">{{ $post->title }}</h2>
                 </div>
                 <x-post-video :post="$post" />
-                @if (!$post->isCanView() && ($post->video || $post->video_free))
+                @if (!$post->isCanView() && $post->video_free)
                     <x-user-trial-viewing-post-navigation :post="$post" text="トライアルチケットを使ってフルバージョンの動画を見ることができます！" />
                 @endif
                 @if (auth('users')->user()->subscribed('online-salon'))
@@ -21,13 +21,13 @@
                 @endif
                 <div class="relative">
                     <x-post-content :post="$post" class="mb-8" />
-                    @if (!$post->isCanView() && ($post->content || $post->content_free))
+                    @if (!$post->isCanView() && $post->content_free)
                         <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t via-white from-white">
 
                         </div>
                     @endif
                 </div>
-                @if (!$post->isCanView() && ($post->content || $post->content_free))
+                @if (!$post->isCanView() && $post->content_free)
                     <x-user-trial-viewing-post-navigation :post="$post" text="トライアルチケットを使ってフルバージョンの記事を見ることができます！" />
                 @endif
                 <x-post-navigation-buttons :post="$post" />
