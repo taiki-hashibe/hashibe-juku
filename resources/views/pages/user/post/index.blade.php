@@ -1,5 +1,5 @@
 <x-layout class="bg-white">
-    @if (!$post->isCanView())
+    @if (!$post->isCanView() && ($post->video_free || $post->content_free))
         <x-user-trial-viewing-post-modal :post="$post" />
     @endif
     <x-horizontal-layout>
