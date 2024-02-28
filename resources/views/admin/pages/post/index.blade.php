@@ -33,7 +33,7 @@
                     <x-admin.th>
                         公開ステータス</x-admin.th>
                     <x-admin.th>
-                        公開範囲</x-admin.th>
+                        一般公開日</x-admin.th>
                     <x-admin.th></x-admin.th>
                 </x-admin.tr>
             </x-admin.thead>
@@ -69,7 +69,9 @@
                             <x-admin.content-status-badge :status="$item->status"></x-admin.content-status-badge>
                         </x-admin.td>
                         <x-admin.td>
-                            <x-admin.publish-level-enum :level="$item->publish_level"></x-admin.publish-level-enum>
+                            @if ($item->public_release_at)
+                                {{ $item->public_release_at->format('Y年m月d日 H時i分') }}
+                            @endif
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.anchor
