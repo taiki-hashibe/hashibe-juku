@@ -122,12 +122,6 @@ class PostController extends Controller
         if (is_array($file)) {
             $file = $file[0];
         }
-        $order = $post->order;
-        if ($request->category_id !== $post->category_id) {
-            /** @var int|null $categoryId */
-            $categoryId = $request->category_id;
-            $order = ItemOrderAutoIncrement::post($categoryId);
-        }
         $post->revision();
         $post->update([
             'title' => $request->title,
@@ -141,7 +135,6 @@ class PostController extends Controller
             'video_free' => $request->video_free,
             'description' => $request->description,
             'admin_id' => $admin->id,
-            'order' => $order,
             'line_link' => $request->line_link,
             'public_release_at' => $request->public_release_at
         ]);

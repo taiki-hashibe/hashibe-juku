@@ -12,7 +12,7 @@ return [
         'defaults'       => [
             'title'        => config('app.name'), // set false to total remove
             'titleBefore'  => false, // Put defaults.title before page title, like 'It's Over 9000! - Dashboard'
-            'description'  => 'ベーシスト橋部太樹の運用するオンラインスクール', // set false to total remove
+            'description'  => 'ベーシスト橋部太樹の運用するオンラインベーススクール。初心者の方向けのレッスンからプロを目指す方向けのレッスンまで、動画付きの講座を低価格で提供しています', // set false to total remove
             'separator'    => ' - ',
             'keywords'     => [],
             'canonical'    => false, // Set to null or 'full' to use Url::full(), set to 'current' to use Url::current(), set false to total remove
