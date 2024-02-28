@@ -193,21 +193,16 @@ class Post extends Model
     {
         $category = $this->category;
         if ($category) {
-            $samePosts = $category->posts()->publish()->where('id', '!=', $this->id);
+            $samePosts = $category->posts()->publish()->where('id', '!=', $this->id)->where('order', '<=', $this->order)->orderBy('order', 'desc');
             return $samePosts->count() !== 0 ?
                 $samePosts->where('order', '<=', $this->order)
-                ->orderBy('order')
-                ->orderBy('id', 'desc')
                 ->first()
                 :
                 null;
         } else {
-            $samePosts = self::publish()->where('category_id', null)->where('id', '!=', $this->id);
+            $samePosts = self::publish()->where('category_id', null)->where('id', '!=', $this->id)->where('order', '<=', $this->order)->orderBy('order', 'desc');
             return $samePosts->count() !== 0 ?
-                $samePosts->where('order', '<=', $this->order)
-                ->orderBy('order')
-                ->orderBy('id', 'desc')
-                ->first()
+                $samePosts->first()
                 :
                 null;
         }

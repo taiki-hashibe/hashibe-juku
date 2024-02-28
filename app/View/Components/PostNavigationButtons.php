@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 
 class PostNavigationButtons extends Component
 {
+    public bool $auth;
     public Post|null $prev;
     public Post|null $next;
     /**
@@ -16,6 +17,7 @@ class PostNavigationButtons extends Component
      */
     public function __construct(Post $post)
     {
+        $this->auth = auth('users')->check();
         $this->prev = $post->prev();
         $this->next = $post->next();
     }
