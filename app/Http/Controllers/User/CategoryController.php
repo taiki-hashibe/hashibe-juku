@@ -17,9 +17,9 @@ class CategoryController extends Controller
             SEOMeta::setDescription($category->description);
         }
         return view('pages.user.category.index', [
-            'posts' => $category->posts()->publish()->get(),
+            'posts' => $category->posts()->publish()->sortOrder()->get(),
             'category' => $category,
-            'categories' => $category->children()->onlyHasPost()
+            'categories' => $category->children()->onlyHasPost()->sortOrder()
         ]);
     }
 }
