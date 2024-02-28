@@ -129,9 +129,16 @@
             {{-- <li class="border-e border-slate-400 mx-4"></li> --}}
         </ul>
         <ul class="text-slate-700 text-sm mb-6">
-            <li class="mb-1"><a href="{{ route('legal') }}">特定商取引法に基づく表記</a></li>
+            @foreach ($pages as $item)
+                <li class="mb-1"><a
+                        href="{{ route('page', [
+                            'page' => $item->slug,
+                        ]) }}">{{ $item->title }}</a>
+                </li>
+            @endforeach
+            {{-- <li class="mb-1"><a href="{{ route('legal') }}">特定商取引法に基づく表記</a></li>
             <li class="mb-1"><a href="{{ route('privacy') }}">プライバシーポリシー</a></li>
-            <li class="mb-1"><a href="{{ route('term') }}">利用規約</a></li>
+            <li class="mb-1"><a href="{{ route('term') }}">利用規約</a></li> --}}
         </ul>
         <p class="text-sm text-slate-700">&copy;{{ config('app.name') }}2023</p>
     </footer>

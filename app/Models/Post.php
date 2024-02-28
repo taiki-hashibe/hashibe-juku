@@ -6,6 +6,7 @@ use App\Services\GenerateSlug;
 use App\Services\PostContentParser\PublishLevelParser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Post extends Model
 {
@@ -168,12 +169,15 @@ class Post extends Model
         return $this->image ?? asset('images/post-thumbnail-default.png');
     }
 
-    public function getDescription(): string
+    public function getDescription(): string|null
     {
         if ($this->description) {
             return $this->description;
         }
-        $content = PublishLevelParser::parse($this->content);
+        if (!$this->content_free && !$this->content) {
+            return null;
+        }
+        $content = PublishLevelParser::parse($this->content_free ?? $this->content);
         return html_entity_decode(strip_tags($content));
     }
 
@@ -234,5 +238,41 @@ class Post extends Model
     public function publishLevelReadable(): string
     {
         return PublishLevelEnum::readableForFront($this->publish_level);
+    }
+
+    public function getRouteCategoryOrPost(bool $auth = null)
+    {
+        Log::info($this);
+        Log::info($this->category_id);
+        Log::info($this->category);
+        if ($auth === true || ($auth === null && auth('users')->check())) {
+            Log::info('auth handling');
+            if ($this->category) {
+                Log::info('category handling');
+                return route('user.post.category', [
+                    'category' => $this->category->slug,
+                    'post' => $this->slug
+                ]);
+            } else {
+                Log::info('post handling');
+                return route('user.post.post', [
+                    'post' => $this->slug
+                ]);
+            }
+        } else {
+            Log::info('no auth handling');
+            if ($this->category) {
+                Log::info('category handling');
+                return route('post.category', [
+                    'category' => $this->category->slug,
+                    'post' => $this->slug
+                ]);
+            } else {
+                Log::info('post handling');
+                return route('post.post', [
+                    'post' => $this->slug
+                ]);
+            }
+        }
     }
 }

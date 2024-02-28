@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(\App\Http\Controllers\HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home');
-    Route::get('/legal', 'legal')->name('legal');
-    Route::get('/privacy', 'privacy')->name('privacy');
-    Route::get('/term', 'term')->name('term');
 });
 
 Route::name('category.')->controller(\App\Http\Controllers\CategoryController::class)->group(function () {
@@ -32,6 +29,10 @@ Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\PostContr
 Route::name('curriculum.')->controller(\App\Http\Controllers\CurriculumController::class)->group(function () {
     Route::get('/curriculum/{curriculum:slug}', 'index')->name('index');
     Route::get('/curriculum/post/{curriculum:slug}', 'post')->name('post');
+});
+
+Route::name('register.')->prefix('register')->controller(\App\Http\Controllers\RegisterController::class)->group(function () {
+    Route::get('/guidance', 'guidance')->name('guidance');
 });
 
 Route::name('user.')->prefix('user')->group(function () {
@@ -84,3 +85,5 @@ Route::name('line.')->prefix('line')->group(function () {
         Route::post('/trial-lesson-submit', 'trialLessonSubmit')->name('trial-lesson-submit');
     });
 });
+
+Route::get('/{page:slug}', [\App\Http\Controllers\PageController::class, 'index'])->name('page');

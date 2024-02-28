@@ -22,7 +22,10 @@ class PostController extends Controller
         $post = Post::publish()->where('slug', request()->post)->first();
         if (!$post) abort(404);
         SEOMeta::setTitle($post->title);
-        SEOMeta::setDescription($post->getDescription());
+        $description = $post->getDescription();
+        if ($description) {
+            SEOMeta::setDescription($description);
+        }
         return view('pages.post.index', [
             'category' => $category,
             'post' => $post,
@@ -41,8 +44,11 @@ class PostController extends Controller
         $post = Post::publish()->where('slug', request()->post)->first();
         if (!$post) abort(404);
         SEOMeta::setTitle($post->title);
-        SEOMeta::setDescription($post->getDescription());
-        return view('pages.post.post', [
+        $description = $post->getDescription();
+        if ($description) {
+            SEOMeta::setDescription($description);
+        }
+        return view('pages.post.index', [
             'post' => $post,
         ]);
     }

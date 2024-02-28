@@ -12,6 +12,28 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('トップページ', route('home'));
 });
 
+Breadcrumbs::for('page', function (BreadcrumbTrail $trail, $page) {
+    $trail->parent('home');
+    $trail->push($page->title, route('page', [
+        'page' => $page->slug
+    ]));
+});
+
+// Breadcrumbs::for('legal', function (BreadcrumbTrail $trail) {
+//     $trail->parent('home');
+//     $trail->push('利用規約', route('legal'));
+// });
+
+// Breadcrumbs::for('privacy', function (BreadcrumbTrail $trail) {
+//     $trail->parent('home');
+//     $trail->push('プライバシーポリシー', route('privacy'));
+// });
+
+// Breadcrumbs::for('term', function (BreadcrumbTrail $trail) {
+//     $trail->parent('home');
+//     $trail->push('特定商取引法に基づく表記', route('term'));
+// });
+
 Breadcrumbs::for('category.index', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('home');
     $trail->push($category->name, route('category.index', [
@@ -32,4 +54,9 @@ Breadcrumbs::for('post.post', function (BreadcrumbTrail $trail, $post) {
     $trail->push($post->title, route('post.post', [
         'post' => $post->slug,
     ]));
+});
+
+Breadcrumbs::for('register.guidance', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('入会案内', route('register.guidance'));
 });

@@ -18,4 +18,4 @@ setupSortable("category-list");
 setupSortable("post-list");
 setupSortable("curriculum-list");
 setupSortable("curriculum-post-list");
-
+setupSortable("sort-list");

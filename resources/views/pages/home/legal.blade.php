@@ -1,4 +1,5 @@
 <x-layout class="bg-white">
+    {{ Breadcrumbs::render(request()->route()->getName()) }}
     <h2 class="text-slate-700 mb-12 font-bold text-lg px-4">特定商取引法に基づく表記</h2>
     <div class="wp-content px-4 mb-12">
         <figure class="wp-block-table">

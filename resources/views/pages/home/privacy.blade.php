@@ -1,4 +1,5 @@
 <x-layout class="bg-white">
+    {{ Breadcrumbs::render(request()->route()->getName()) }}
     <h2 class="text-slate-700 mb-12 font-bold text-lg px-4">プライバシーポリシー</h2>
     <div class="content px-4 mb-12">
         <!-- wp:paragraph -->

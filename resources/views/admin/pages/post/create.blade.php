@@ -1,7 +1,7 @@
 <x-admin.auth-layout>
     <x-admin.breadcrumb :pages="[
         [
-            'label' => '投稿',
+            'label' => '記事',
             'href' => route('admin.post.index'),
         ],
         [
@@ -9,8 +9,6 @@
         ],
     ]"></x-admin.breadcrumb>
     @if ($errors->any())
-        @dump($errors)
-        @dump($errors->get('exercises.*'))
         @foreach ($errors->all() as $e)
             <div class="mb-3">
                 <p class="text-red-500 font-bold mb-1">{{ $e }}</p>

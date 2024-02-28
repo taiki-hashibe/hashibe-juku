@@ -1,5 +1,9 @@
 <x-guest-layout class="bg-white">
-    {{ Breadcrumbs::render(request()->route()->getName(), $post, $category) }}
+    @if (isset($category))
+        {{ Breadcrumbs::render(request()->route()->getName(), $post, $category) }}
+    @else
+        {{ Breadcrumbs::render(request()->route()->getName(), $post) }}
+    @endif
     <x-horizontal-layout>
         <x-slot:main>
             <div class="mb-8">
@@ -28,7 +32,7 @@
                                         公式LINEを友達追加して先取り視聴しよう！
                                     </p>
                                     <a class="inline-block md:block px-6 py-2 rounded-full text-white outline-1 font-bold bg-line duration-200 hover:bg-line-active mb-6"
-                                        href="{{ config('line.link') }}">
+                                        href="{{ $post->line_link ?? config('line.link') }}">
                                         <div class="flex justify-center items-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                 class="w-5 h-5 me-3" viewBox="0 0 16 16">
@@ -38,11 +42,7 @@
                                             <span>公式LINE</span>
                                         </div>
                                     </a>
-                                    <a href="{{ route('user.post.category', [
-                                        'post' => $post->slug,
-                                        'category' => $post->category->slug,
-                                    ]) }}"
-                                        class="block underline">
+                                    <a href="{{ $post->getRouteCategoryOrPost(true) }}" class="block underline">
                                         既に友達追加済みの方はこちら！
                                     </a>
                                 </div>
@@ -51,21 +51,15 @@
                     </div>
                 @else
                     <x-post-video :post="$post" />
-                    @if ($post->video_free)
-                        <x-add-official-line-navigation text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！"
-                            href="{{ route('user.post.category', [
-                                'post' => $post->slug,
-                                'category' => $post->category->slug,
-                            ]) }}" />
+                    @if ($post->video || $post->video_free)
+                        <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
+                            text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />
                     @endif
                     <x-post-content :post="$post" class="mb-8"
                         column="{{ $post->content_free ? 'content_free' : null }}" />
-                    @if ($post->content_free)
-                        <x-add-official-line-navigation text="公式LINEを友達追加するとフルバージョンの記事が閲覧できます！"
-                            href="{{ route('user.post.category', [
-                                'post' => $post->slug,
-                                'category' => $post->category->slug,
-                            ]) }}" />
+                    @if ($post->content || $post->content_free)
+                        <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
+                            text="公式LINEを友達追加するとフルバージョンの記事が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />
                     @endif
                 @endif
 

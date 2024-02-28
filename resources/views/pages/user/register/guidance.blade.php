@@ -1,8 +1,5 @@
 <x-layout class="bg-white">
-    <x-breadcrumb :post="null" :category="null" :curriculum="null" :item="[
-        'label' => '入会案内',
-        'url' => route('user.register.guidance'),
-    ]" />
+    {{ Breadcrumbs::render(request()->route()->getName()) }}
     <div class="mb-8">
         <x-gradation-container class="mb-24">
             <p class="text-slate-600 font-bold leading-relaxed mb-6">
@@ -169,13 +166,15 @@
                     ※学生の方は保護者の同意のもとクレジットカード決済をご利用ください。
                 </li>
             </ul>
-            @if ($user->subscribed('online-salon'))
-                <p>既に入会済みです！<br>
-                    引き続きレッスン動画をお楽しみください！
-                </p>
-            @else
-                <x-payment-form action="{{ route('user.register.register') }}" :intent="$intent" :price="$price"
-                    class="mb-4" />
+            @if (isset($user))
+                @if ($user->subscribed('online-salon'))
+                    <p>既に入会済みです！<br>
+                        引き続きレッスン動画をお楽しみください！
+                    </p>
+                @else
+                    <x-payment-form action="{{ route('user.register.register') }}" :intent="$intent" :price="$price"
+                        class="mb-4" />
+                @endif
             @endif
         </div>
     </div>
