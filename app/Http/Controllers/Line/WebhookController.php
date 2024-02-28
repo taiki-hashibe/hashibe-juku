@@ -64,6 +64,7 @@ class WebhookController extends Controller
                             'line_status' => 'unfollow',
                         ]);
                     }
+                    Log::info($le->isFollow());
                 }
             } catch (\LINE\Clients\MessagingApi\ApiException $e) {
                 $headers = $e->getResponseHeaders();
