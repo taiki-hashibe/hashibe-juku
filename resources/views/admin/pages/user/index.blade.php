@@ -15,6 +15,7 @@
                     <x-admin.th>
                         ID</x-admin.th>
                     <x-admin.th>名前</x-admin.th>
+                    <x-admin.th>LINEのステータス</x-admin.th>
                     <x-admin.th></x-admin.th>
                 </x-admin.tr>
             </x-admin.thead>
@@ -25,6 +26,17 @@
                             {{ $item->id }}</x-admin.td>
                         <x-admin.td>
                             {{ $item->name }}
+                        </x-admin.td>
+                        <x-admin.td>
+                            @if ($item->line_status === 'unfollow')
+                                <span class="px-2 inline-flex text-xs font-semibold bg-red-100 text-red-800">
+                                    ブロック
+                                </span>
+                            @else
+                                <span class="px-2 inline-flex text-xs font-semibold bg-green-100 text-green-800">
+                                    有効
+                                </span>
+                            @endif
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.anchor

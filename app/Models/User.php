@@ -26,7 +26,8 @@ class User extends Authenticatable
         'line_id',
         'status_message',
         'picture_url',
-        'status'
+        'status',
+        'line_status'
     ];
 
     protected static function booted(): void

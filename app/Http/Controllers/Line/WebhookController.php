@@ -12,7 +12,7 @@ class WebhookController extends Controller
     public function index()
     {
         foreach (request()->events as $e) {
-            LineWebhookEvent::createByEvent($e);
+            $le = LineWebhookEvent::createByEvent($e);
             $source = array_key_exists('source', $e) ? $e['source'] : null;
             if (!$source) {
                 continue;
@@ -37,6 +37,16 @@ class WebhookController extends Controller
                         'status_message' => $profile->getStatusMessage(),
                         'picture_url' => $profile->getPictureUrl(),
                     ]);
+                    if ($le->isFollow()) {
+                        $user->update([
+                            'line_status' => 'follow',
+                        ]);
+                    }
+                    if ($le->isUnfollow()) {
+                        $user->update([
+                            'line_status' => 'unfollow',
+                        ]);
+                    }
                 } else {
                     $user = User::where('line_id', $lineId)->first();
                     $user->update([
@@ -44,6 +54,16 @@ class WebhookController extends Controller
                         'status_message' => $profile->getStatusMessage(),
                         'picture_url' => $profile->getPictureUrl(),
                     ]);
+                    if ($le->isFollow()) {
+                        $user->update([
+                            'line_status' => 'follow',
+                        ]);
+                    }
+                    if ($le->isUnfollow()) {
+                        $user->update([
+                            'line_status' => 'unfollow',
+                        ]);
+                    }
                 }
             } catch (\LINE\Clients\MessagingApi\ApiException $e) {
                 $headers = $e->getResponseHeaders();
