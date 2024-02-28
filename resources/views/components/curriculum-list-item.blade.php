@@ -19,9 +19,11 @@
         <div class="flex">
             <div>
                 <x-gradation-anchor
-                    href="{{ route('curriculum.index', [
-                        'curriculum' => $curriculum->slug,
-                    ]) }}">
+                    href="{{ isset($href)
+                        ? $href
+                        : route('user.curriculum.index', [
+                            'curriculum' => $curriculum->slug,
+                        ]) }}">
                     受講する！
                 </x-gradation-anchor>
             </div>

@@ -11,9 +11,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $posts = Post::publish()->where('category_id', null)->get();
-        $categories = Category::onlyHasPost();
-        $curriculums = Curriculum::onlyHasPost();
+        $posts = Post::publish()->where('category_id', null)->sortOrder()->get();
+        $categories = Category::onlyHasPost()->sortOrder();
+        $curriculums = Curriculum::onlyHasPost()->sortOrder();
         return view('pages.user.home.index', [
             'posts' => $posts,
             'categories' => $categories,

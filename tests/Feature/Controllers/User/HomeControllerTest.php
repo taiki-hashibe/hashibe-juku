@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Controllers;
+namespace Tests\Feature\Controllers\User;
 
 use App\Models\Category;
 use App\Models\Curriculum;
@@ -14,77 +14,87 @@ use Tests\TestCase;
 class HomeControllerTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     */
     public function testIndex(): void
     {
+        $response = $this->get(route('user.home'));
+        $response->assertRedirect(route('user.login'));
         /**
-         * guest-layoutが使用される
+         * auth-layoutが使用される
          * パンくずリストが表示される
          * カテゴリーが無ければ見出しも表示されない
          * カリキュラムが無ければ見出しも表示されない
          */
-        $response = $this->get(route('home'));
+        $user = User::factory()->create();
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertStatus(200);
         // ヘッダーのテスト
-        $response->assertSee(route('home'));
-        $response->assertSee('公式LINE');
-        $response->assertSee(config('line.link'));
-        $response->assertSee('ログイン');
-        $response->assertSee(route('user.login'));
+        $response->assertSee(route('user.home'));
+        $response->assertSee($user->name);
+        $response->assertSeeInOrder([
+            route('user.bookmark'),
+            route('user.complete'),
+            route('user.logout'),
+        ]);
 
         // パンくずリストが表示される
-        $response->assertSee('トップページ');
+        $response->assertSee('マイページ');
         // カテゴリーが無い場合
         $response->assertDontSee('カテゴリーから探す');
         // カリキュラムが無い場合
         $response->assertDontSee('カリキュラムから探す');
-        // 投稿もカテゴリーもカリキュラムもない場合、公式LINEの追加ボタンが表示される
-        $response->assertSee(asset('images/line-icon.png'));
+        // 投稿もカテゴリーもカリキュラムも無くても公式LINEの追加ボタンは表示されない
+        $response->assertDontSee(asset('images/line-icon.png'));
 
         // 投稿が存在する場合
         $post = Post::factory()->create();
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSee($post->title);
         $response->assertSee($post->getDescription());
-        $response->assertSee(route('post.post', [
+        $response->assertSee(route('user.post.post', [
             'post' => $post->slug,
         ]));
-        // 投稿が存在するので、公式LINEの追加ボタンが表示されない
-        $response->assertDontSee(asset('images/line-icon.png'));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('post.post', [
+            'post' => $post->slug,
+        ]));
 
         // カテゴリーが存在する場合
         $category = Category::factory()->create();
         $post->update(['category_id' => $category->id]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         // 投稿はカテゴリーに紐づいているので表示されなくなる
         $response->assertDontSee($post->title);
         // カテゴリーの見出しが表示される
         $response->assertSee("カテゴリーから探す");
         $response->assertSee($category->name);
-        $response->assertSee(route('category.index', [
+        $response->assertSee(route('user.category.index', [
             'category' => $category->slug,
         ]));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('category.index', [
+            'category' => $category->slug,
+        ]));
+
         // カリキュラムの見出しは表示されない
         $response->assertDontSee('カリキュラムから探す');
-        // 投稿が存在するので、公式LINEの追加ボタンが表示されない
-        $response->assertDontSee(asset('images/line-icon.png'));
 
         // カテゴリーが存在するが紐づく投稿が無い場合
         $post->update(['category_id' => null]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSee($post->title);
         $response->assertSee($post->getDescription());
-        $response->assertSee(route('post.post', [
+        $response->assertSee(route('user.post.post', [
             'post' => $post->slug,
         ]));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('post.post', [
+            'post' => $post->slug,
+        ]));
+
         // カテゴリーの見出しは表示されない
         $response->assertDontSee("カテゴリーから探す");
         // カリキュラムの見出しは表示されない
         $response->assertDontSee('カリキュラムから探す');
-        // カテゴリーが存在するので、公式LINEの追加ボタンが表示されない
-        $response->assertDontSee(asset('images/line-icon.png'));
 
         // カリキュラムが存在する場合
         $curriculum = Curriculum::factory()->create();
@@ -92,10 +102,14 @@ class HomeControllerTest extends TestCase
             'curriculum_id' => $curriculum->id,
             'post_id' => $post->id,
         ]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSee($post->title);
         $response->assertSee($post->getDescription());
-        $response->assertSee(route('post.post', [
+        $response->assertSee(route('user.post.post', [
+            'post' => $post->slug,
+        ]));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('post.post', [
             'post' => $post->slug,
         ]));
         // カテゴリーの見出しは表示されない
@@ -105,17 +119,23 @@ class HomeControllerTest extends TestCase
         $response->assertSee($curriculum->name);
         $response->assertSee($curriculum->description);
         $response->assertSee($curriculum->image);
-        $response->assertSee(route('curriculum.index', [
+        $response->assertSee(route('user.curriculum.index', [
             'curriculum' => $curriculum->slug,
         ]));
-        // カリキュラムが存在するので、公式LINEの追加ボタンが表示されない
-        $response->assertDontSee(asset('images/line-icon.png'));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('curriculum.index', [
+            'curriculum' => $curriculum->slug,
+        ]));
 
         // カリキュラムが存在するが紐づく投稿が無い場合
         $curriculumPost->delete();
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSee($post->title);
-        $response->assertSee(route('post.post', [
+        $response->assertSee(route('user.post.post', [
+            'post' => $post->slug,
+        ]));
+        // ユーザー用のリンクである必要がある
+        $response->assertDontSee(route('post.post', [
             'post' => $post->slug,
         ]));
         // カテゴリーの見出しは表示されない
@@ -123,8 +143,6 @@ class HomeControllerTest extends TestCase
         // カリキュラムの見出しは表示されない
         $response->assertDontSee('カリキュラムから探す');
         $response->assertDontSee($curriculum->name);
-        // 投稿が存在するので、公式LINEの追加ボタンが表示されない
-        $response->assertDontSee(asset('images/line-icon.png'));
         $post->delete();
 
         // 投稿は並び順通りになっている
@@ -137,7 +155,7 @@ class HomeControllerTest extends TestCase
         $post0 = Post::factory()->create([
             'order' => 0
         ]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSeeInOrder([
             $post0->title,
             $post1->title,
@@ -156,7 +174,7 @@ class HomeControllerTest extends TestCase
         $post0->update(['category_id' => $category0->id]);
         $post1->update(['category_id' => $category1->id]);
         $post2->update(['category_id' => $category2->id]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSeeInOrder([
             $category0->name,
             $category1->name,
@@ -184,16 +202,11 @@ class HomeControllerTest extends TestCase
             'curriculum_id' => $curriculum2->id,
             'post_id' => $post2->id,
         ]);
-        $response = $this->get(route('home'));
+        $response = $this->actingAs($user, 'users')->get(route('user.home'));
         $response->assertSeeInOrder([
             $curriculum0->name,
             $curriculum1->name,
             $curriculum2->name,
         ]);
-
-        // ユーザー認証済みであればユーザーページにリダイレクトする
-        $user = User::factory()->create();
-        $response = $this->actingAs($user, 'users')->get(route('home'));
-        $response->assertRedirect(route('user.home'));
     }
 }

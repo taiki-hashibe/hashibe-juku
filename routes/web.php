@@ -86,4 +86,4 @@ Route::name('line.')->prefix('line')->group(function () {
     });
 });
 
-Route::get('/{page:slug}', [\App\Http\Controllers\PageController::class, 'index'])->name('page');
+Route::get('/page/{page:slug}', [\App\Http\Controllers\PageController::class, 'index'])->name('page');

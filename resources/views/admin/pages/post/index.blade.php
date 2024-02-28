@@ -13,15 +13,6 @@
     @if (session('success'))
         <x-alert status="success" title="{{ session('success') }}"></x-alert>
     @endif
-    <div class="px-8 mb-4">
-        <form class="flex" action="{{ route('admin.post.index') }}" method="get">
-            <button class="flex items-center me-2">
-                <input type="checkbox" @if (!request()->all_post) checked @endif>
-                <span>自分の投稿のみ</span>
-                <input type="checkbox" class="hidden" name="all_post" @if (!request()->all_post) checked @endif>
-            </button>
-        </form>
-    </div>
     <x-admin.table-container>
         <x-admin.table>
             <x-admin.thead>

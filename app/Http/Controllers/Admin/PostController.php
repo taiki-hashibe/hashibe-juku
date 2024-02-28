@@ -15,12 +15,7 @@ class PostController extends Controller
 {
     public function index(): \Illuminate\Contracts\View\View
     {
-        /** @var \App\Models\Admin $admin */
-        $admin = auth('admins')->user();
-        $items = Post::editable()->orderByDesc('created_at');
-        if (!request()->all_post) {
-            $items = $items->where('admin_id', $admin->id);
-        }
+        $items = Post::orderByDesc('created_at');
         return view('admin.pages.post.index', [
             'items' => $items,
         ]);
