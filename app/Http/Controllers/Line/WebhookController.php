@@ -29,8 +29,8 @@ class WebhookController extends Controller
                 config: $config,
             );
             try {
-                $profile = $messagingApi->getProfile($lineId);
                 if (User::where('line_id', $lineId)->doesntExist()) {
+                    $profile = $messagingApi->getProfile($lineId);
                     $user = User::create([
                         'name' => $profile->getDisplayName(),
                         'line_id' => $lineId,
@@ -49,23 +49,23 @@ class WebhookController extends Controller
                     }
                 } else {
                     $user = User::where('line_id', $lineId)->first();
-                    $user->update([
-                        'name' => $profile->getDisplayName(),
-                        'status_message' => $profile->getStatusMessage(),
-                        'picture_url' => $profile->getPictureUrl(),
-                    ]);
-                    if ($le->isFollow()) {
-                        $user->update([
-                            'line_status' => 'follow',
-                        ]);
-                    }
                     if ($le->isUnfollow()) {
                         $user->update([
                             'line_status' => 'unfollow',
                         ]);
+                    } else {
+                        $profile = $messagingApi->getProfile($lineId);
+                        $user->update([
+                            'name' => $profile->getDisplayName(),
+                            'status_message' => $profile->getStatusMessage(),
+                            'picture_url' => $profile->getPictureUrl(),
+                        ]);
+                        if ($le->isFollow()) {
+                            $user->update([
+                                'line_status' => 'follow',
+                            ]);
+                        }
                     }
-                    Log::info($le->isFollow());
-                    Log::info($le->isUnfollow());
                 }
             } catch (\LINE\Clients\MessagingApi\ApiException $e) {
                 $headers = $e->getResponseHeaders();
