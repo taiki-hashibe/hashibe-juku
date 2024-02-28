@@ -65,6 +65,7 @@ class WebhookController extends Controller
                         ]);
                     }
                     Log::info($le->isFollow());
+                    Log::info($le->Unfollow());
                 }
             } catch (\LINE\Clients\MessagingApi\ApiException $e) {
                 $headers = $e->getResponseHeaders();
