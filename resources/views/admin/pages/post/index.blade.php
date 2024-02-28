@@ -17,8 +17,8 @@
         <x-admin.table>
             <x-admin.thead>
                 <x-admin.tr>
-                    {{-- <x-admin.th>
-                        サムネイル</x-admin.th> --}}
+                    <x-admin.th>
+                        サムネイル</x-admin.th>
                     <x-admin.th>
                         タイトル</x-admin.th>
                     <x-admin.th>
@@ -26,10 +26,6 @@
                     <x-admin.th>
                         アクセス数
                     </x-admin.th>
-                    <x-admin.th>
-                        ブックマーク</x-admin.th>
-                    <x-admin.th>
-                        完了</x-admin.th>
                     <x-admin.th>
                         公開ステータス</x-admin.th>
                     <x-admin.th>
@@ -40,11 +36,11 @@
             <x-admin.tbody class="bg-white dark:bg-slate-800">
                 @foreach ($items->paginate(24) as $item)
                     <x-admin.tr>
-                        {{-- <x-admin.td>
-                            <div class="aspect-square w-12 h-12 overflow-hidden">
+                        <x-admin.td>
+                            <div class="aspect-video w-12 overflow-hidden">
                                 <img class="w-full h-full object-cover" src="{{ $item->thumbnail() }}" alt="">
                             </div>
-                        </x-admin.td> --}}
+                        </x-admin.td>
                         <x-admin.td>
                             <p class="max-w-36 truncate">{{ $item->title }}</p>
                         </x-admin.td>
@@ -58,12 +54,6 @@
                         </x-admin.td>
                         <x-admin.td class="text-right">
                             {{ $item->accessLogs->count() }}
-                        </x-admin.td>
-                        <x-admin.td class="text-right">
-                            {{ $item->bookmarks->count() }}
-                        </x-admin.td>
-                        <x-admin.td class="text-right">
-                            {{ $item->completes->count() }}
                         </x-admin.td>
                         <x-admin.td>
                             <x-admin.content-status-badge :status="$item->status"></x-admin.content-status-badge>

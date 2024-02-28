@@ -55,7 +55,7 @@
             <x-admin.row>
                 <x-slot name="label">サムネイル画像</x-slot>
                 <x-slot name="value">
-                    <div class="w-24 h-24 rounded-sm overflow-hidden border-2">
+                    <div class="aspect-video w-24 rounded-sm overflow-hidden border-2">
                         <img class="w-full h-full object-cover" src="{{ $item->thumbnail() }}" alt="">
                     </div>
                 </x-slot>

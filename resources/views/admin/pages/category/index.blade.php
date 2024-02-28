@@ -35,7 +35,7 @@
                 @foreach ($items->paginate(24) as $item)
                     <x-admin.tr>
                         <x-admin.td>
-                            <div class="aspect-square w-12 h-12 overflow-hidden">
+                            <div class="aspect-video w-12 overflow-hidden">
                                 <img class="w-full h-full object-cover" src="{{ $item->thumbnail() }}" alt="">
                             </div>
                         </x-admin.td>

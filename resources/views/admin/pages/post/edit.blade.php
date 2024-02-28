@@ -32,7 +32,7 @@
         <x-admin.edit-form-row>
             <x-slot name="label">サムネイル画像</x-slot>
             <x-slot name="field">
-                <label x-data="{ imagePreview: {{ $item->image ? $item->thumbnail() : null }} }"
+                <label x-data="{ imagePreview: {{ $item->image ? "'" . $item->thumbnail() . "'" : null }} }"
                     class="cursor-pointer w-full mb-4 block px-3 py-2 border border-slate-300 rounded-md text-start flex flex-col justify-center items-center py-4">
                     <template x-if="imagePreview">
                         <div class="w-40 aspect-video rounded-sm overflow-hidden border-2">
