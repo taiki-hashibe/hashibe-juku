@@ -38,6 +38,8 @@ class PostControllerTest extends TestCase
          * 一般向け動画が表示される
          * 一般向け記事が表示される
          * トライアルチケットの利用を促す
+         * 動画が無ければ動画に関してはトライアルチケットの利用を促さない
+         * 記事が無ければ記事に関してはトライアルチケットの利用を促さない
          */
         $user = User::factory()->create();
         $response = $this->actingAs($user, 'users')->get(route('user.post.category', [
@@ -55,8 +57,31 @@ class PostControllerTest extends TestCase
         $response->assertDontSee($post->video);
         $response->assertSee($post->content_free);
         $response->assertDontSee($post->content);
+        $response->assertSee('トライアルチケットを使ってフルバージョンの動画を見ることができます！');
         $response->assertSee('トライアルチケットを使ってフルバージョンの記事を見ることができます！');
         $response->assertSee(route('user.post.trial-viewing'));
+        // 動画が無い場合
+        $post->update(['video' => null, 'video_free' => null]);
+        $response = $this->actingAs($user, 'users')->get(route('user.post.category', [
+            'category' => $category->slug,
+            'post' => $post->slug
+        ]));
+        $response->assertStatus(200);
+        $response->assertDontSee($post->video);
+        $response->assertDontSee($post->video_free);
+        $response->assertDontSee('トライアルチケットを使ってフルバージョンの動画を見ることができます！');
+        // 記事が無い場合
+        $post->update(['content' => null, 'content_free' => null]);
+        $response = $this->actingAs($user, 'users')->get(route('user.post.category', [
+            'category' => $category->slug,
+            'post' => $post->slug
+        ]));
+        $response->assertStatus(200);
+        $response->assertDontSee($post->content);
+        $response->assertDontSee($post->content_free);
+        $response->assertDontSee('トライアルチケットを使ってフルバージョンの記事を見ることができます!');
+
+        $post->update(['video' => 'video.mp4', 'content' => 'main_content', 'content_free' => 'free_content']);
 
         /**
          * サブスクリプション未加入ユーザー + トライアルチケットを利用済み
@@ -82,6 +107,7 @@ class PostControllerTest extends TestCase
         $response->assertDontSee($post->video_free);
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
+        $response->assertDontSee('トライアルチケットを使ってフルバージョンの動画を見ることができます！');
         $response->assertDontSee('トライアルチケットを使ってフルバージョンの記事を見ることができます！');
         $response->assertDontSee(route('user.post.trial-viewing'));
 
@@ -106,6 +132,7 @@ class PostControllerTest extends TestCase
         $response->assertDontSee($post->video_free);
         $response->assertSee($post->content);
         $response->assertDontSee($post->content_free);
+        $response->assertDontSee('トライアルチケットを使ってフルバージョンの動画を見ることができます！');
         $response->assertDontSee('トライアルチケットを使ってフルバージョンの記事を見ることができます！');
         // 動画が無い場合
         $post->update(['video' => null]);

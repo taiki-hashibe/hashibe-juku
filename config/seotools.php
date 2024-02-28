@@ -38,7 +38,7 @@ return [
          */
         'defaults' => [
             'title'       => config('app.name'), // set false to total remove
-            'description' => 'ベーシスト橋部太樹の運用するオンラインスクール', // set false to total remove
+            'description' => 'ベーシスト橋部太樹の運用するオンラインベーススクール。初心者の方向けのレッスンからプロを目指す方向けのレッスンまで、動画付きの講座を低価格で提供しています', // set false to total remove
             'url'         => false, // Set null for using Url::current(), set false to total remove
             'type'        => false,
             'site_name'   => false,
@@ -60,7 +60,7 @@ return [
          */
         'defaults' => [
             'title'       => config('app.name'), // set false to total remove
-            'description' => 'ベーシスト橋部太樹の運用するオンラインスクール', // set false to total remove
+            'description' => 'ベーシスト橋部太樹の運用するオンラインベーススクール。初心者の方向けのレッスンからプロを目指す方向けのレッスンまで、動画付きの講座を低価格で提供しています', // set false to total remove
             'url'         => false, // Set to null or 'full' to use Url::full(), set to 'current' to use Url::current(), set false to total remove
             'type'        => 'WebPage',
             'images'      => [],

@@ -1,7 +1,7 @@
 <x-gradation-container>
     <div class="flex flex-col items-center">
         <p class="text-center mb-6">
-            トライアルチケットを使ってフルバージョンの記事を見ることができます！
+            {{ $text }}
         </p>
         <form action="{{ route('user.post.trial-viewing') }}" method="POST">
             @csrf
