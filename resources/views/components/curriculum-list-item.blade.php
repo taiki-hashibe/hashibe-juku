@@ -21,7 +21,7 @@
                 <x-gradation-anchor
                     href="{{ isset($href)
                         ? $href
-                        : route('user.curriculum.index', [
+                        : route('curriculum.index', [
                             'curriculum' => $curriculum->slug,
                         ]) }}">
                     受講する！

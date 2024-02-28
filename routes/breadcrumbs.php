@@ -56,3 +56,9 @@ Breadcrumbs::for('user.category.index', function (BreadcrumbTrail $trail, $categ
         'category' => $category->slug
     ]));
 });
+
+
+Breadcrumbs::for('user.register.guidance', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.home');
+    $trail->push('入会案内', route('user.register.guidance'));
+});

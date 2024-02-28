@@ -17,7 +17,6 @@ class CurriculumController extends Controller
         }
         return view('pages.user.curriculum.index', [
             'curriculum' => $curriculum,
-
         ]);
     }
 

@@ -10,6 +10,7 @@ use Tests\TestCase;
 
 class CurriculumPostEditorTest extends TestCase
 {
+    use RefreshDatabase;
     /** @test */
     public function renders_successfully()
     {
