@@ -55,8 +55,15 @@
                         <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
                             text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />
                     @endif
-                    <x-post-content :post="$post" class="mb-8"
-                        column="{{ $post->content_free ? 'content_free' : null }}" />
+                    <div class="relative">
+                        <x-post-content :post="$post" class="mb-8"
+                            column="{{ $post->content_free ? 'content_free' : null }}" />
+                        @if ($post->content || $post->content_free)
+                            <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t via-white from-white">
+
+                            </div>
+                        @endif
+                    </div>
                     @if ($post->content || $post->content_free)
                         <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
                             text="公式LINEを友達追加するとフルバージョンの記事が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />

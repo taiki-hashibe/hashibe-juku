@@ -19,7 +19,14 @@
                         <livewire:complete :post="$post" />
                     </div>
                 @endif
-                <x-post-content :post="$post" class="mb-8" />
+                <div class="relative">
+                    <x-post-content :post="$post" class="mb-8" />
+                    @if (!$post->isCanView() && ($post->content || $post->content_free))
+                        <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t via-white from-white">
+
+                        </div>
+                    @endif
+                </div>
                 @if (!$post->isCanView() && ($post->content || $post->content_free))
                     <x-user-trial-viewing-post-navigation :post="$post" text="トライアルチケットを使ってフルバージョンの記事を見ることができます！" />
                 @endif
