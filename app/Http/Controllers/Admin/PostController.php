@@ -70,6 +70,7 @@ class PostController extends Controller
             'image' => $file ? asset('storage/' . $file->store('post_thumbnails', 'public')) : null,
             'video' => $request->video,
             'video_free' => $request->video_free,
+            'description' => $request->description,
             'admin_id' => $admin->id,
             'order' => ItemOrderAutoIncrement::post($categoryId),
             'line_link' => $request->line_link,
