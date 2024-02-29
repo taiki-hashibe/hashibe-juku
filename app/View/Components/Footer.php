@@ -1,20 +1,22 @@
 <?php
 
-namespace App\View\Components\Layouts;
+namespace App\View\Components;
 
+use App\Models\Page;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
-class GuestLayout extends Component
+class Footer extends Component
 {
-    public bool $unlink;
+    public Collection $pages;
     /**
      * Create a new component instance.
      */
-    public function __construct(bool $unlink = false)
+    public function __construct()
     {
-        $this->unlink = $unlink;
+        $this->pages = Page::sortOrder()->get();
     }
 
     /**
@@ -22,6 +24,6 @@ class GuestLayout extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('layouts.guest-layout');
+        return view('components.footer');
     }
 }

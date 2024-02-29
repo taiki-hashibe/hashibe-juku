@@ -1,12 +1,15 @@
 <x-guest-layout class="bg-white" :guest="true">
     {{ Breadcrumbs::render(request()->route()->getName()) }}
-    <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-14">
-        @foreach ($posts as $item)
-            <li>
-                <x-post-list-item :post="$item" />
-            </li>
-        @endforeach
-    </ul>
+    @if ($posts->count() > 0)
+        <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">最初に見てほしい記事</h2>
+        <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-14">
+            @foreach ($posts as $item)
+                <li>
+                    <x-post-list-item :post="$item" />
+                </li>
+            @endforeach
+        </ul>
+    @endif
     @if ($categories->get()->count() > 0)
         <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
             カテゴリーから探す

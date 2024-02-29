@@ -12,14 +12,12 @@ use Illuminate\View\Component;
 class AuthLayout extends Component
 {
     public User $user;
-    public Collection $pages;
     /**
      * Create a new component instance.
      */
     public function __construct()
     {
         $this->user = auth('users')->user();
-        $this->pages = Page::sortOrder()->get();
     }
 
     /**

@@ -36,6 +36,7 @@
 ]) }}>
     <header class="fixed top-0 left-0 w-full h-20 md:mb-0 px-6 md:px-10 z-40 duration-200 {{ $headerClass ?? '' }}">
         <nav class="h-full flex justify-between items-center">
+            <h1 class="hidden">{{ config('app.name') }}</h1>
             @if (isset($unlink) && $unlink)
                 <div>
                     <x-logo class="md:ps-4 h-12 py-3"></x-logo>
@@ -72,28 +73,7 @@
             {{ $slot }}
         </x-container>
     </main>
-    <footer class="px-6 md:px-10 py-12 bg-slate-200">
-        <p class="mb-8">
-            <x-logo class="h-16 py-3 opacity-75"></x-logo>
-        </p>
-        <ul class="flex text-slate-700 mb-12">
-            <li><a href="{{ config('line.link') }}">公式LINE</a></li>
-            {{-- <li class="border-e border-slate-400 mx-4"></li> --}}
-        </ul>
-        <ul class="text-slate-700 text-sm mb-6">
-            @foreach ($pages as $item)
-                <li class="mb-1"><a
-                        href="{{ route('page', [
-                            'page' => $item->slug,
-                        ]) }}">{{ $item->title }}</a>
-                </li>
-            @endforeach
-            {{-- <li class="mb-1"><a href="{{ route('legal') }}">特定商取引法に基づく表記</a></li>
-            <li class="mb-1"><a href="{{ route('privacy') }}">プライバシーポリシー</a></li>
-            <li class="mb-1"><a href="{{ route('term') }}">利用規約</a></li> --}}
-        </ul>
-        <p class="text-sm text-slate-700">&copy;{{ config('app.name') }}2023</p>
-    </footer>
+    <x-footer />
     @livewireScripts
 </body>
 

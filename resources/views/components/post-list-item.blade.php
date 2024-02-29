@@ -11,7 +11,7 @@
             alt="">
     </a>
     <div>
-        <p class="font-bold mb-2 truncate">{{ $post->title }}</p>
+        <h3 class="font-bold mb-2 truncate">{{ $post->title }}</h3>
         <p class="whitespace-pre-line line-clamp-4 mb-4">{{ $post->getDescription() }}
         </p>
         <x-gradation-anchor href="{{ $href }}">
