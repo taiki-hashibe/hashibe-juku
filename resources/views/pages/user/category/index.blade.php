@@ -1,4 +1,4 @@
-<x-guest-layout class="bg-white">
+<x-layout class="bg-white">
     {{ Breadcrumbs::render(request()->route()->getName(), $category) }}
     <h2 class="font-bold text-slate-800 text-xl ps-4 mb-4">
         {{ $category->name }}
@@ -27,4 +27,4 @@
             </li>
         @endforeach
     </ul>
-</x-guest-layout>
+</x-layout>
