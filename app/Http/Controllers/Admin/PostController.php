@@ -122,7 +122,7 @@ class PostController extends Controller
             'video_free' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
             'line_link' => 'nullable|url',
-            'public_release_at' => 'nullable|date|after:now',
+            'public_release_at' => 'nullable|date',
             'tags' => 'nullable|array',
             'tags.*' => 'exists:posts,id',
         ]);
