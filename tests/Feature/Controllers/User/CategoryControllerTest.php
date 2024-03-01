@@ -40,7 +40,7 @@ class CategoryControllerTest extends TestCase
         $response->assertStatus(200);
         // パンくずリストが表示される
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $category->name,
         ]);
         $response->assertSee($category->name);

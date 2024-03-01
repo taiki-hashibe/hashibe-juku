@@ -47,7 +47,12 @@ Breadcrumbs::for('register.guidance', function (BreadcrumbTrail $trail) {
 });
 
 Breadcrumbs::for('user.home', function (BreadcrumbTrail $trail) {
-    $trail->push('マイページ', route('user.home'));
+    $trail->push('トップページ', route('user.home'));
+});
+
+Breadcrumbs::for('user.my-page', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.home');
+    $trail->push('マイページ', route('user.my-page'));
 });
 
 Breadcrumbs::for('user.category.index', function (BreadcrumbTrail $trail, $category) {

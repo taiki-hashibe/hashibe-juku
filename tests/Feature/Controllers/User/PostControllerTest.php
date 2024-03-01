@@ -48,7 +48,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $category->name,
             $post->title
         ]);
@@ -98,7 +98,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $category->name,
             $post->title
         ]);
@@ -123,7 +123,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $category->name,
             $post->title
         ]);
@@ -221,7 +221,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $post->title
         ]);
         $response->assertSee($post->title);
@@ -267,7 +267,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $post->title
         ]);
         $response->assertSee($post->title);
@@ -290,7 +290,7 @@ class PostControllerTest extends TestCase
         ]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $post->title
         ]);
         $response->assertSee($post->title);

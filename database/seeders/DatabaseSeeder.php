@@ -15,16 +15,21 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         \App\Models\User::factory(10)->create();
+        \App\Models\Tag::factory(30)->create();
         for ($i = 0; $i < 50; $i++) {
             $publicReleaseAt = null;
             if (random_int(0, 10) > 3) {
                 $publicReleaseAt = now()->addDays(random_int(10, 30));
             }
             $category = Category::inRandomOrder()->first();
-            \App\Models\Post::factory()->create([
+            $post = \App\Models\Post::factory()->create([
                 'category_id' => 8 < random_int(0, 10) ? Category::factory()->create()->id : (3 < random_int(0, 10) ? $category : null),
                 'public_release_at' => $publicReleaseAt,
             ]);
+            for ($t = 0; $t < random_int(10, 30); $t++) {
+                $tag = \App\Models\Tag::inRandomOrder()->first();
+                $post->tags()->attach($tag);
+            }
         }
         for ($c = 0; $c < 5; $c++) {
             $curriculum = \App\Models\Curriculum::factory()->create();

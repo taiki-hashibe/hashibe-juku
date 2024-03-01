@@ -35,6 +35,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('curriculum', \App\Http\Controllers\Admin\CurriculumController::class);
         Route::resource('inflow-route', \App\Http\Controllers\Admin\InflowRouteController::class);
         Route::match(['GET', 'POST'], '/page/sort', [\App\Http\Controllers\Admin\PageController::class, 'sort'])->name('page.sort');
+        Route::resource('tag', \App\Http\Controllers\Admin\TagController::class);
         Route::resource('page', \App\Http\Controllers\Admin\PageController::class);
         Route::name('media-upload.')->controller(\App\Http\Controllers\Admin\MediaUploadController::class)->group(function () {
             Route::post('/upload', 'upload')->name('upload');

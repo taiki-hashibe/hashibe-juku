@@ -49,7 +49,9 @@ class PostController extends Controller
             'video_free' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
             'line_link' => 'nullable|url',
-            'public_release_at' => 'nullable|date|after:now'
+            'public_release_at' => 'nullable|date|after:now',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:posts,id',
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -76,6 +78,9 @@ class PostController extends Controller
             'line_link' => $request->line_link,
             'public_release_at' => $request->public_release_at
         ]);
+        if ($request->tags) {
+            $item->tags()->attach($request->tags);
+        }
         return redirect()->route('admin.post.show', [
             'post' => $item->id
         ])->with('message', $item->title . 'を登録しました。');
@@ -117,7 +122,9 @@ class PostController extends Controller
             'video_free' => 'nullable|string',
             'description' => 'nullable|string|max:1000',
             'line_link' => 'nullable|url',
-            'public_release_at' => 'nullable|date|after:now'
+            'public_release_at' => 'nullable|date|after:now',
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:posts,id',
         ]);
         $file = $request->file('image');
         if (is_array($file)) {
@@ -139,6 +146,9 @@ class PostController extends Controller
             'line_link' => $request->line_link,
             'public_release_at' => $request->public_release_at
         ]);
+        if ($request->tags) {
+            $post->tags()->sync($request->tags);
+        }
         return redirect()->route('admin.post.show', [
             'post' => $post->id
         ])->with('message', $post->title . 'を更新しました。');

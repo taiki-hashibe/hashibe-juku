@@ -88,6 +88,22 @@
             <x-slot name="label">公開範囲</x-slot>
             <x-slot name="value"><x-admin.publish-level-enum :level="$item->publish_level"></x-admin.publish-level-enum></x-slot>
         </x-admin.row>
+
+        <x-admin.row>
+            <x-slot name="label">タグ</x-slot>
+            <x-slot name="value">
+                <ul>
+                    @foreach ($item->tags as $tag)
+                        <li class="me-1 mb-2 inline">
+                            <a class="bg-white px-1 hover:underline"
+                                href="{{ route('admin.tag.show', [
+                                    'tag' => $tag->id,
+                                ]) }}">{{ $tag->name }}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </x-slot>
+        </x-admin.row>
         @if ($item->getRevision->count() !== 0)
             <x-admin.row>
                 <x-slot name="label">リビジョン</x-slot>

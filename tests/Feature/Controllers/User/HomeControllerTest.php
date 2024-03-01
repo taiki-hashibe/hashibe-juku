@@ -37,7 +37,7 @@ class HomeControllerTest extends TestCase
         ]);
 
         // パンくずリストが表示される
-        $response->assertSee('マイページ');
+        $response->assertSee('トップページ');
         // カテゴリーが無い場合
         $response->assertDontSee('カテゴリーから探す');
         // カリキュラムが無い場合

@@ -117,6 +117,11 @@ class Post extends Model
         return $this->hasMany(CompletePost::class);
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'post_tags');
+    }
+
     public function getInTheSameCategory()
     {
         $category = $this->category;

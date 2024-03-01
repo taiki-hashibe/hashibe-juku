@@ -37,7 +37,7 @@ class CurriculumControllerTest extends TestCase
         $response = $this->actingAs($this->subscribedUser, 'users')->get(route('user.curriculum.index', ['curriculum' => $curriculum->slug]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $curriculum->name
         ]);
         $response->assertSee($curriculum->description);
@@ -93,7 +93,7 @@ class CurriculumControllerTest extends TestCase
         $response = $this->actingAs($this->subscribedUser, 'users')->get(route('user.curriculum.post', ['curriculum' => $curriculum->slug, 'post' => $post->slug]));
         $response->assertStatus(200);
         $response->assertSeeInOrder([
-            'マイページ',
+            'トップページ',
             $curriculum->name,
             $post->title
         ]);

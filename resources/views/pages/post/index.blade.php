@@ -49,8 +49,10 @@
                             </div>
                         </div>
                     </div>
+                    <x-post-tags :post="$post" />
                 @else
                     <x-post-video :post="$post" />
+                    <x-post-tags :post="$post" />
                     @if ($post->video_free)
                         <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
                             text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />

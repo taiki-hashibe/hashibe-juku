@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('inflow_routes', function (Blueprint $table) {
-            $table->longText('redirect_url')->change();
+        Schema::create('post_tags', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('inflow_routes', function (Blueprint $table) {
-            $table->string('redirect_url')->change();
-        });
+        Schema::dropIfExists('post_tags');
     }
 };

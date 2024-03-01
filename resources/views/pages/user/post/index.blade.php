@@ -11,13 +11,15 @@
                 </div>
                 <x-post-video :post="$post" />
                 @if (!$post->isCanView() && $post->video_free)
+                    <x-post-tags :post="$post" />
                     <x-user-trial-viewing-post-navigation :post="$post" text="トライアルチケットを使ってフルバージョンの動画を見ることができます！" />
                 @endif
                 @if (auth('users')->user()->subscribed('online-salon'))
-                    <div class="flex">
+                    <div class="flex mb-8">
                         <livewire:bookmark :post="$post" />
                         <livewire:complete :post="$post" />
                     </div>
+                    <x-post-tags :post="$post" />
                 @endif
                 <div class="relative">
                     <x-post-content :post="$post" class="mb-8" />
