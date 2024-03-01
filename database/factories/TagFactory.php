@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Tag;
+use App\Services\GenerateSlug;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,8 +19,10 @@ class TagFactory extends Factory
      */
     public function definition(): array
     {
+        $name = Str::random(10);
         return [
-            'name' => Str::random(10),
+            'name' => $name,
+            'slug' => GenerateSlug::generate($name, Tag::class),
         ];
     }
 }

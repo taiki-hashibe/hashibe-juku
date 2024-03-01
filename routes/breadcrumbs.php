@@ -19,6 +19,14 @@ Breadcrumbs::for('page', function (BreadcrumbTrail $trail, $page) {
     ]));
 });
 
+Breadcrumbs::for('tag.index', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('home');
+    $trail->push('タグから探す');
+    $trail->push($tag->name, route('tag.index', [
+        'tag' => $tag->slug
+    ]));
+});
+
 Breadcrumbs::for('category.index', function (BreadcrumbTrail $trail, $category) {
     $trail->parent('home');
     $trail->push($category->name, route('category.index', [
@@ -53,6 +61,14 @@ Breadcrumbs::for('user.home', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('user.my-page', function (BreadcrumbTrail $trail) {
     $trail->parent('user.home');
     $trail->push('マイページ', route('user.my-page'));
+});
+
+Breadcrumbs::for('user.tag', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('user.home');
+    $trail->push('タグから探す');
+    $trail->push($tag->name, route('user.tag', [
+        'tag' => $tag->slug
+    ]));
 });
 
 Breadcrumbs::for('user.category.index', function (BreadcrumbTrail $trail, $category) {

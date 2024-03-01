@@ -3,10 +3,6 @@
 namespace App\View\Components;
 
 use App\Models\Post;
-use App\Models\PublishLevelEnum;
-use App\Services\PostContentParser\GetImageModalProperty;
-use App\Services\PostContentParser\ModalImageParser;
-use App\Services\PostContentParser\PublishLevelParser;
 use Illuminate\View\Component;
 
 class PostContent extends Component

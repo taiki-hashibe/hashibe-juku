@@ -19,6 +19,10 @@ Route::controller(\App\Http\Controllers\HomeController::class)->group(function (
 
 Route::get('/ir/{key}', [\App\Http\Controllers\InflowRouteController::class, 'index'])->name('inflow-route');
 
+Route::name('tag.')->controller(\App\Http\Controllers\TagController::class)->group(function () {
+    Route::get('/tag/{tag:slug}', 'index')->name('index');
+});
+
 Route::name('category.')->controller(\App\Http\Controllers\CategoryController::class)->group(function () {
     Route::get('/category/{category}', 'index')->name('index');
 });
@@ -47,6 +51,9 @@ Route::name('user.')->prefix('user')->group(function () {
     Route::middleware(['auth.user:users'])->group(function () {
         Route::controller(\App\Http\Controllers\User\HomeController::class)->group(function () {
             Route::get('', 'index')->name('home');
+        });
+        Route::controller(\App\Http\Controllers\User\TagController::class)->group(function () {
+            Route::get('/tag/{tag:slug}', 'index')->name('tag');
         });
         Route::name('post.')->prefix('post')->controller(\App\Http\Controllers\User\PostController::class)->group(function () {
             Route::get('/content/{post:slug}', 'post')->name('post');
