@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Curriculum;
 use App\Models\CurriculumPost;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Console\Command;
 
 class DevPostDelete extends Command
@@ -35,6 +36,7 @@ class DevPostDelete extends Command
         }
         Post::query()->delete();
         Category::query()->delete();
+        Tag::query()->delete();
         CurriculumPost::query()->delete();
         Curriculum::query()->delete();
         $this->info('All posts and categories have been deleted');

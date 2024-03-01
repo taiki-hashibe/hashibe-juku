@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Tag;
+use App\Services\GenerateSlug;
 use Illuminate\Http\Request;
 
 class TagController extends Controller
@@ -37,6 +38,7 @@ class TagController extends Controller
 
         $tag = Tag::create([
             'name' => $request->name,
+            'slug' => GenerateSlug::generate($request->name, Tag::class),
         ]);
 
         return redirect()->route('admin.tag.show', [
