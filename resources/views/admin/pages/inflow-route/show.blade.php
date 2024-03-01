@@ -54,7 +54,9 @@
         <x-admin.row>
             <x-slot name="label">リダイレクト先</x-slot>
             <x-slot name="value">
-                <a target="_blank" href="{{ $item->redirect_url }}">{{ $item->redirect_url }}</a>
+                <div class="max-w-80 overflow-hidden truncate">
+                    <a target="_blank" href="{{ $item->redirect_url }}">{{ $item->redirect_url }}</a>
+                </div>
             </x-slot>
         </x-admin.row>
         <x-admin.row>
