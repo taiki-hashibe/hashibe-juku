@@ -17,6 +17,8 @@ Route::controller(\App\Http\Controllers\HomeController::class)->group(function (
     Route::get('/', 'home')->name('home');
 });
 
+Route::get('/ir/{key}', [\App\Http\Controllers\InflowRouteController::class, 'index'])->name('inflow-route');
+
 Route::name('category.')->controller(\App\Http\Controllers\CategoryController::class)->group(function () {
     Route::get('/category/{category}', 'index')->name('index');
 });

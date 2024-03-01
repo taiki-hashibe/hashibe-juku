@@ -33,6 +33,7 @@ Route::name('admin.')->prefix('admin')->group(function () {
         Route::match(['GET', 'POST'], '/curriculum/sort', [\App\Http\Controllers\Admin\CurriculumController::class, 'sort'])->name('curriculum.sort');
         Route::match(['GET', 'POST'], '/curriculum/sort/item/{curriculum}', [\App\Http\Controllers\Admin\CurriculumController::class, 'sortItem'])->name('curriculum.sort-item');
         Route::resource('curriculum', \App\Http\Controllers\Admin\CurriculumController::class);
+        Route::resource('inflow-route', \App\Http\Controllers\Admin\InflowRouteController::class);
         Route::match(['GET', 'POST'], '/page/sort', [\App\Http\Controllers\Admin\PageController::class, 'sort'])->name('page.sort');
         Route::resource('page', \App\Http\Controllers\Admin\PageController::class);
         Route::name('media-upload.')->controller(\App\Http\Controllers\Admin\MediaUploadController::class)->group(function () {
