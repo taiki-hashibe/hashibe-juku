@@ -16,6 +16,7 @@ class InflowRouteController extends Controller
         if (!request()->test) {
             InflowRouteLog::create([
                 'inflow_route_id' => $inflowRoute->id,
+                'ip' => request()->ip(),
             ]);
         }
         return redirect($inflowRoute->redirect_url);
