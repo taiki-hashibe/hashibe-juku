@@ -24,12 +24,17 @@ class TagControllerTest extends TestCase
         $response = $this->get(route('tag.index', [
             'tag' => $tag->slug
         ]));
-
         $response->assertStatus(200);
         $response->assertSee('ログイン');
         $response->assertSee('タグから探す');
         $response->assertSee($tag->name);
         $response->assertSee($post1->title);
         $response->assertSee($post2->title);
+        // アクセスログが記録されている
+        $this->assertDatabaseHas('access_logs', [
+            'url' => route('tag.index', [
+                'tag' => $tag->slug
+            ]),
+        ]);
     }
 }

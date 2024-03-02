@@ -27,6 +27,10 @@ class HomeControllerTest extends TestCase
          */
         $response = $this->get(route('home'));
         $response->assertStatus(200);
+        // アクセスログが記録されている
+        $this->assertDatabaseHas('access_logs', [
+            'url' => route('home'),
+        ]);
         // ヘッダーのテスト
         $response->assertSee(route('home'));
         $response->assertSee('公式LINE');

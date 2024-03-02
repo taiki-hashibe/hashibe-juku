@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Support\Str;
 
 class PostControllerTest extends TestCase
 {
@@ -201,6 +200,13 @@ class PostControllerTest extends TestCase
             'category' => $category->slug,
             'post' => $post->slug,
         ]));
+        // アクセスログが記録されている
+        $this->assertDatabaseHas('access_logs', [
+            'url' => route('post.category', [
+                'category' => $category->slug,
+                'post' => $post->slug,
+            ]),
+        ]);
     }
 
     public function testPost()
@@ -369,5 +375,11 @@ class PostControllerTest extends TestCase
         $response->assertRedirect(route('user.post.post', [
             'post' => $post->slug,
         ]));
+        // アクセスログが記録されている
+        $this->assertDatabaseHas('access_logs', [
+            'url' => route('post.post', [
+                'post' => $post->slug,
+            ]),
+        ]);
     }
 }

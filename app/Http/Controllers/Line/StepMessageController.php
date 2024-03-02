@@ -7,25 +7,9 @@ use App\Models\Questionnaire;
 use App\Models\TrialLesson;
 use App\Models\User;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
-use LINE\Clients\MessagingApi\Model\ReplyMessageRequest;
-use LINE\Clients\MessagingApi\Model\TextMessage;
 
 class StepMessageController extends Controller
 {
-    public function index()
-    {
-        $lineId = request()->line_id;
-        if ($lineId) {
-            $user = User::where('line_id', $lineId)->first();
-        }
-        if (Auth::guard('admins')->attempt(['line_id' => $lineId], true)) {
-            request()->session()->regenerate();
-            return redirect()->intended('admin');
-        }
-        return view('pages.line.step.index');
-    }
-
     public function step1()
     {
         $user = auth('users')->user();
@@ -80,6 +64,7 @@ class StepMessageController extends Controller
 
     public function trialLesson()
     {
+        /** @var User $user */
         $user = auth('users')->user();
         $valid = $user->questionnaireCompleted([
             'line.step.step-1',

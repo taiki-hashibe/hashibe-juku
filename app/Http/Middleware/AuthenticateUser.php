@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\AccessLog;
 use Closure;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
@@ -11,7 +10,6 @@ class AuthenticateUser extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         $this->authenticate($request, $guards);
-        AccessLog::create();
 
         return $next($request);
     }

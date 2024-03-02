@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class AccessLog extends Model
@@ -13,40 +14,39 @@ class AccessLog extends Model
     protected $fillable = [
         'user_id',
         'url',
-        'route_name'
+        'route_name',
+        'category_id',
+        'post_id',
+        'tag_id',
+        'curriculum_id',
+        'ip'
     ];
 
     protected static function booted()
     {
-        /** @var \App\Models\User $user */
-        $user = auth('users')->user();
-        /** @var \Illuminate\Routing\Route $route */
-        $route = request()->route();
-
-        $categorySlug = request()->category;
-        $category = null;
-        if ($categorySlug) {
-            $category = Category::where('slug', $categorySlug)->first();
-        }
-        $postSlug = request()->post;
-        $post = null;
-        if ($postSlug) {
-            $post = Post::where('slug', $postSlug)->first();
-        }
-        $routeName = $route->getName();
-        if ($routeName) {
-            $routeName = Str::replace(['.'], '-', $routeName);
-            if (!config("routes.$routeName")) {
-                $routeName = null;
+        static::addGlobalScope('ipIgnore', function (\Illuminate\Database\Eloquent\Builder $builder) {
+            $ignoreIps = config('access_log.ignore_ips');
+            if ($ignoreIps) {
+                $builder->whereNotIn('ip', $ignoreIps);
             }
-        }
-        static::creating(function (AccessLog $accessLog) use ($user, $routeName, $category, $post) {
-            $accessLog->user_id = $user->id;
-            $accessLog->url = request()->url();
-            $accessLog->route_name = $routeName;
-            $accessLog->category_id = $category ? $category->id : null;
-            $accessLog->post_id = $post ? $post->id : null;
         });
+    }
+
+    public static function register(User $user = null)
+    {
+        $ip = request()->ip();
+        $routeName = Route::currentRouteName();
+        if (Str::startsWith($routeName, 'admin.')) return;
+        self::create([
+            'user_id' => $user?->id,
+            'url' => request()->url(),
+            'route_name' => $routeName,
+            'category_id' => request()->category ? Category::where('slug', request()->category)->first()?->id : null,
+            'post_id' => request()->post ? Post::where('slug', request()->post)->first()?->id : null,
+            'tag_id' => request()->tag ? Tag::where('slug', request()->tag)->first()?->id : null,
+            'curriculum_id' => request()->curriculum ? Curriculum::where('slug', request()->curriculum)->first()?->id : null,
+            'ip' => $ip
+        ]);
     }
 
     /**
