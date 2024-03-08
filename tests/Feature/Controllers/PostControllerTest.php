@@ -381,5 +381,38 @@ class PostControllerTest extends TestCase
                 'post' => $post->slug,
             ]),
         ]);
+        // 認証のリセット
+        auth()->guard('users')->logout();
+        // 一般公開用動画のみ存在する場合
+        $post = Post::factory()->create([
+            'video' => null,
+            'video_free' => 'video',
+            'content' => null,
+            'content_free' => null,
+        ]);
+        $response = $this->get(route('post.post', [
+            'post' => $post->slug,
+        ]));
+        $response->assertStatus(200);
+        $response->assertSee($post->video_free);
+        // 動画下に公式LINEへの誘導が表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの動画が閲覧できます！");
+
+
+        // フリーコンテンツのみ存在する場合
+        $post = Post::factory()->create([
+            'video' => null,
+            'video_free' => null,
+            'content' => null,
+            'content_free' => 'content',
+        ]);
+        $post->refresh();
+        $response = $this->get(route('post.post', [
+            'post' => $post->slug,
+        ]));
+        $response->assertStatus(200);
+        $response->assertSee($post->content_free);
+        // 記事下に公式LINEへの誘導が表示されない
+        $response->assertDontSee("公式LINEを友達追加するとフルバージョンの記事が閲覧できます！");
     }
 }

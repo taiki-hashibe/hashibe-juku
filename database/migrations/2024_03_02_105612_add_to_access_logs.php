@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('access_logs', function (Blueprint $table) {
-            //
+            $table->dropColumn('ip');
         });
     }
 };

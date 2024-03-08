@@ -23,7 +23,10 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('access_logs', function (Blueprint $table) {
-            //
+            $table->dropForeign(['tag_id']);
+            $table->dropForeign(['curriculum_id']);
+            $table->dropColumn('tag_id');
+            $table->dropColumn('curriculum_id');
         });
     }
 };

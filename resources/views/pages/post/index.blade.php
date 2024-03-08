@@ -53,7 +53,7 @@
                 @else
                     <x-post-video :post="$post" />
                     <x-post-tags :post="$post" />
-                    @if ($post->video_free)
+                    @if ($post->video && $post->video_free)
                         <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
                             text="公式LINEを友達追加するとフルバージョンの動画が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />
                     @endif
@@ -66,7 +66,7 @@
                             </div>
                         @endif
                     </div>
-                    @if ($post->content_free)
+                    @if ($post->content && $post->content_free)
                         <x-add-official-line-navigation lineLink="{{ $post->line_link }}"
                             text="公式LINEを友達追加するとフルバージョンの記事が閲覧できます！" href="{{ $post->getRouteCategoryOrPost() }}" />
                     @endif
