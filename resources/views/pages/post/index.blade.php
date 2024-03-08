@@ -60,7 +60,7 @@
                     <div class="relative">
                         <x-post-content :post="$post" class="mb-8"
                             column="{{ $post->content_free ? 'content_free' : null }}" />
-                        @if ($post->content || $post->content_free)
+                        @if ($post->content && $post->content_free)
                             <div class="absolute bottom-0 left-0 w-full h-40 bg-gradient-to-t via-white from-white">
 
                             </div>
